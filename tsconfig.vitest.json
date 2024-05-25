@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.app.json",
+  "include": ["**/*.ts", "**/*.vue"],
+  "exclude": [],
+  "compilerOptions": {
+    "strict": true,
+    "composite": true,
+    "types": ["node", "jsdom", "vitest/globals"]
+  }
+}
