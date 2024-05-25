@@ -1,0 +1,119 @@
+name: ☁️ Publish - npm Publish and Github Release
+
+on:
+  workflow_call:
+    inputs:
+      commit-hash:
+        description: Commit to checkout
+        required: false
+        type: string
+      tag-name:
+        description: Tag name
+        required: false
+        type: string
+      skip-npm:
+        description: Skip npm publish
+        required: false
+        default: true
+        type: boolean
+  workflow_dispatch:
+    inputs:
+      commit-hash:
+        description: Commit to checkout
+        required: false
+        type: string
+      tag-name:
+        description: Tag name
+        required: false
+        type: string
+      skip-npm:
+        description: Skip npm publish
+        required: false
+        default: true
+        type: boolean
+jobs:
+  publish-npm:
+    if: ${{ inputs.skip-npm != true }}
+    name: ☁️ Publish npm
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⛙ Checkout branch ${{ github.ref }}
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: 🚧 Build
+        uses: ./.github/actions/build
+
+      - name: ☁️ Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          # =================  ☁️ Publish to npm =================
+          pnpm publish
+
+
+  publish-store:
+    name: 🚀 Publish extension
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⛙ Checkout branch ${{ github.ref }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit-hash || 'main' }}
+          fetch-depth: 0
+
+      - name: 🚧 Build
+        uses: ./.github/actions/build
+
+      - name: 🗃️ Zip build folder
+        run: |
+          # =================  🗃️ Zipping build folder  =================
+
+          # Zipping dist folder for artifact upload
+          cd dist;
+          zip -r trakt-extension.zip *
+
+          # Check zip created
+          echo "Zip created in 'dist/'"
+          ls -l  trakt-extension.zip
+          cd ..
+
+      - name: 📝 Generate Release changelog
+        run: |
+          # =================  📝 Generate Release changelog  =================
+
+          pnpm run release:changelog
+
+      - name: 🏷️ Fetch latest tag
+        if: ${{ inputs.tag-name == '' }}
+        id: latest-tag
+        run: |
+          # =================  🏷️ Fetch tags  =================
+
+          tag_name=$(git describe --abbrev=0 --match 'v*')
+          echo "Tag found: '\e[34m$tag_name\e[0m'"
+          echo "TAG_NAME=$tag_name" >> "$GITHUB_OUTPUT"
+
+      - name: 📦 Push Release to github
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag-name || steps.latest-tag.outputs.TAG_NAME }}
+          body_path: RELEASE.md
+          files: dist/trakt-extension.zip
+
+      - name: 🚀 Publish to Chrome webstore
+        env:
+          CHROME_WEB_STORE_EXTENSION_ID: ${{ secrets.CHROME_WEB_STORE_EXTENSION_ID }}
+          CHROME_WEB_STORE_CLIENT_ID: ${{ secrets.CHROME_WEB_STORE_CLIENT_ID }}
+          CHROME_WEB_STORE_CLIENT_SECRET: ${{ secrets.CHROME_WEB_STORE_CLIENT_SECRET }}
+          CHROME_WEB_STORE_REFRESH_TOKEN: ${{ secrets.CHROME_WEB_STORE_REFRESH_TOKEN }}
+        run: |
+          # =================  🚀 Publish to Chrome store  =================
+
+          # Uploading zip to web store
+          npx -s chrome-webstore-upload-cli upload --source dist/trakt-extension.zip --extension-id "$CHROME_WEB_STORE_EXTENSION_ID" --client-id "$CHROME_WEB_STORE_CLIENT_ID" --client-secret "$CHROME_WEB_STORE_CLIENT_SECRET" --refresh-token "$CHROME_WEB_STORE_REFRESH_TOKEN"
+  
