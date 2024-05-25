@@ -1,6 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router';
 
-
 export const routes: RouteRecordRaw[] = [
   {
     path: `/`,
@@ -16,5 +15,5 @@ export const routes: RouteRecordRaw[] = [
     path: `/goodbye`,
     name: 'goodbye',
     component: () => import('../components/views/goodbye/GoodbyeComponent.vue'),
-  }
+  },
 ];

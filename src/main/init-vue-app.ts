@@ -1,10 +1,11 @@
 import { createPinia } from 'pinia';
 
-import type { App, Component } from 'vue';
 import { createApp, getCurrentInstance } from 'vue';
 
-import { createRouter } from '~/router';
+import type { App, Component } from 'vue';
+
 import { initServices } from '~/main/init-services';
+import { createRouter } from '~/router';
 
 export const initVueApp = (component: Component) => {
   const app = createApp(component);

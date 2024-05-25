@@ -4,8 +4,6 @@ import { fileURLToPath, URL } from 'url';
 
 import vue from '@vitejs/plugin-vue';
 
-
-import type { PluginOption } from 'vite';
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
 import dtsPlugin from 'vite-plugin-dts';
@@ -14,6 +12,7 @@ import pkg from './package.json';
 import { isDev, port, resolveParent } from './scripts/utils';
 
 import type { InputOption } from 'rollup';
+import type { PluginOption } from 'vite';
 
 const getInput = (hmr: boolean): InputOption => {
   if (hmr) return { background: resolveParent('src/scripts/background/index.ts') };
@@ -22,7 +21,7 @@ const getInput = (hmr: boolean): InputOption => {
     background: resolveParent('src/scripts/background/index.ts'),
     options: resolveParent('src/views/options/index.html'),
     popup: resolveParent('src/views/popup/index.html'),
-  };;
+  };
 };
 
 const i18nRegex = /.*src\/i18n\/([a-zA-Z]+)\/.*\.json/;
@@ -118,7 +117,7 @@ export default defineConfig(() => ({
   },
   build: {
     outDir: resolveParent('dist'),
-    sourcemap: isDev  ? 'inline' : false,
+    sourcemap: isDev ? 'inline' : false,
     minify: false,
     rollupOptions: {
       input: getInput(isDev),

@@ -1,4 +1,4 @@
-import { mountVueApp } from '~/main';
 import AppComponent from '~/components/AppComponent.vue';
+import { mountVueApp } from '~/main';
 
-mountVueApp('#app-options', AppComponent)
+mountVueApp('#app-options', AppComponent);
