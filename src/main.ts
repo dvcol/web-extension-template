@@ -1,5 +1,5 @@
 import createApp from '~/scripts/main';
 
-const app = createApp('app-options');
+const app = createApp('app');
 
 export default app;
