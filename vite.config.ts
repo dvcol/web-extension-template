@@ -6,7 +6,6 @@ import vue from '@vitejs/plugin-vue';
 
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
-import dtsPlugin from 'vite-plugin-dts';
 
 import pkg from './package.json';
 import { isDev, port, resolveParent } from './scripts/utils';
@@ -27,10 +26,6 @@ const getInput = (hmr: boolean): InputOption => {
 const i18nRegex = /.*src\/i18n\/([a-zA-Z]+)\/.*\.json/;
 
 const getPlugins = (): PluginOption[] => [
-  dtsPlugin({
-    include: ['index.ts', 'web/**'],
-    outDir: resolveParent('dist'),
-  }),
   vue(),
   checker({
     vueTsc: {
