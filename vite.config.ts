@@ -2,7 +2,8 @@ import { readdir, readFile, writeFile } from 'fs/promises';
 import { dirname, join, relative } from 'path';
 import { fileURLToPath, URL } from 'url';
 
-import vue from '@vitejs/plugin-vue';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+import preprocess from 'svelte-preprocess';
 
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
@@ -26,10 +27,13 @@ const getInput = (hmr: boolean): InputOption => {
 const i18nRegex = /.*src\/i18n\/([a-zA-Z]+)\/.*\.json/;
 
 const getPlugins = (): PluginOption[] => [
-  vue(),
+  svelte({
+    preprocess: preprocess(),
+    emitCss: false,
+  }),
   checker({
-    vueTsc: {
-      tsconfigPath: 'tsconfig.app.json',
+    typescript: {
+      tsconfigPath: 'tsconfig.json',
     },
   }),
   {

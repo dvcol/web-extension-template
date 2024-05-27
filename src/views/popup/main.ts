@@ -1,4 +1,5 @@
-import AppComponent from '~/components/AppComponent.vue';
-import { mountVueApp } from '~/main';
+import createApp from '~/scripts/main';
 
-mountVueApp('#app-popup', AppComponent);
+const app = createApp('app-popup');
+
+export default app;

@@ -1,10 +1,16 @@
 {
-  "extends": ["@tsconfig/node20/tsconfig.json", "@vue/tsconfig/tsconfig.json"],
-  "include": ["vite.config.*", "scripts/**/*", "package.json"],
+  "extends": ["@tsconfig/node22/tsconfig.json", "./tsconfig.app.json"],
+  "include": [
+    "vite.config.*",
+    "vitest.setup.ts",
+    "svelte.config.js",
+    "scripts/**/*.ts",
+    "README*md/*.ts",
+    "scripts/*",
+    "scripts/**/*",
+    "package.json"
+  ],
   "compilerOptions": {
-    "strict": true,
-    "composite": true,
-    "resolveJsonModule": true,
-    "types": ["node", "vitest"]
+    "types": ["chrome", "node", "vitest"]
   }
 }

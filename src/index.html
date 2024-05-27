@@ -2,40 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <base target="_blank" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Extension Template</title>
   </head>
   <body>
-    <wc-app-container> Loading web component ... </wc-app-container>
-    <script type="module" src="./views/options/main.ts"></script>
+    <div id="app"></div>
+    <script type="module" src="./main.ts"></script>
   </body>
 </html>
-
-<style>
-  body {
-    overscroll-behavior: none;
-    display: flex;
-    margin: 0;
-    color: rgb(235 235 235 / 64%);
-    font-size: 1rem;
-    background: #181818;
-    transition:
-      color 0.5s,
-      background-color 0.5s;
-    will-change: color, background-color;
-
-    @media (prefers-color-scheme: light) {
-      background: #fff;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      background: #181818;
-    }
-  }
-
-  wc-app-container {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-  }
-</style>

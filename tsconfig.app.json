@@ -1,20 +1,32 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/*", "src/**/*", "src/*.vue", "src/**/*.vue"],
-  "exclude": ["**/*.spec.ts", "**/*.test.ts"],
-  "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+  "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
     "composite": true,
     "baseUrl": ".",
-    "lib": ["DOM", "ESNext", "dom.iterable"],
+    /**
+     * Typecheck JS in `.svelte` and `.js` files by default.
+     * Disable checkJs if you'd like to use dynamic types in JS.
+     * Note that setting allowJs false does not prevent the use
+     * of JS in `.svelte` files.
+     */
+    "allowJs": true,
+    "checkJs": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "lib": ["dom", "ESNext", "dom.iterable"],
     "types": ["chrome", "@types/chrome"],
-    "module": "ESNext",
     "strict": true,
     "esModuleInterop": true,
+    "useDefineForClassFields": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "~/*": ["./src/*"]
     }
-  }
+  },
+  "include": ["env.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "src/*.js", "src/*.ts", "src/*.svelte"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts"],
+  "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
 }
