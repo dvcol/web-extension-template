@@ -1,34 +1,24 @@
 module.exports = {
   root: true,
+  extends: ['plugin:@dvcol/presets/svelte', 'plugin:@dvcol/presets/vitest'],
   plugins: ['@dvcol/presets'],
-  extends: ['plugin:@dvcol/presets/vue', 'plugin:@dvcol/presets/vitest'],
-  // to apply jest linting even-though we use vitest
-  settings: { jest: { version: 27 } },
+  parserOptions: {
+    project: ['./tsconfig.app.json', './tsconfig.vite.json', './tsconfig.vitest.json'],
+  },
   rules: {
-    'import/no-extraneous-dependencies': ['error', { devDependencies: ['/!(src)/**', '**/*.test.*', '**/*.spec.*', '**/*.config.*'] }],
-    'vue/no-undef-components': [
-      'error',
-      {
-        ignorePatterns: ['^v-.*'],
-      },
-    ],
-    'vitest/no-hooks': 'off',
-    'vitest/max-expects': ['warn', { max: 10 }],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.test.*', '**/*.spec.*', '**/*.config.*', 'scripts/*.*'] }],
   },
   overrides: [
     {
-      files: ['*.vue'],
+      files: ['*.json', '*.json5'],
       rules: {
-        'prettier/prettier': [
-          'warn',
-          {
-            printWidth: 90,
-            singleQuote: true,
-            trailingComma: 'all',
-            arrowParens: 'avoid',
-            bracketSpacing: true,
-          },
-        ],
+        '@typescript-eslint/consistent-type-imports': 'off',
+      },
+    },
+    {
+      files: ['*.svelte'],
+      rules: {
+        'prefer-const': 'off',
       },
     },
   ],

@@ -4,6 +4,7 @@
     "vite.config.*",
     "vitest.setup.ts",
     "svelte.config.js",
+    ".eslintrc.cjs",
     "scripts/**/*.ts",
     "README*md/*.ts",
     "scripts/*",
