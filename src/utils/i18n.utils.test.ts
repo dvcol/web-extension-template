@@ -1,3 +1,4 @@
+import * as Svelte from 'svelte/store';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { useI18n } from './i18n.utils';
@@ -17,8 +18,9 @@ describe('i18n.utils.ts', () => {
     addLocale: vi.fn(),
   };
   const chromeI18nMock = vi.fn();
-  vi.spyOn(I18nStore, 'i18n').mockReturnValue(i18nStoreMock.i18n as never);
-  vi.spyOn(I18nStore, 'addLocale').mockReturnValue(i18nStoreMock.addLocale as never);
+  vi.spyOn(Svelte, 'get').mockImplementation((val: unknown) => val);
+  vi.spyOn(I18nStore, 'i18n').mockImplementation(i18nStoreMock.i18n as never);
+  vi.spyOn(I18nStore, 'addLocale').mockImplementation(i18nStoreMock.addLocale as never);
   vi.spyOn(I18nStore, 'lang', 'get').mockReturnValue(i18nStoreMock.lang);
   vi.spyOn(I18nStore, 'locales', 'get').mockReturnValue(i18nStoreMock.locales);
   vi.spyOn(I18nUtils, 'useI18nTranslate').mockImplementation(chromeI18nMock);

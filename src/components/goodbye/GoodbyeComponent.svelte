@@ -6,7 +6,7 @@
 
 <div class="text">
   <div class="title">{i18n('app_name', 'global')}</div>
-  <div>{ i18n('title') }</div>
+  <div>{i18n('title')}</div>
 </div>
 
 <style lang="scss">

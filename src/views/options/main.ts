@@ -1,5 +1,5 @@
-import createApp from '~/scripts/main';
+import defineComponent from '~/web/define-component';
 
-const app = createApp('app-options');
-
-export default app;
+defineComponent({ baseUrl: import.meta.env.VITE_BASE, view: { option: true, web: import.meta.env.VITE_WEB } })
+  .then(() => console.info('Web Component defined'))
+  .catch(err => console.error('Failed to define component', err));

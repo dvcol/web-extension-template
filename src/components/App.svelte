@@ -1,9 +1,17 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import Router, { link } from 'svelte-spa-router';
 
-
-  import svelteLogo from '~/assets/svelte.svg';
+  import svelteLogo from '~/assets/logo.svg';
   import { routeDefinition, routeMap } from '~/router/routes';
+
+  export let baseUrl: string = '';
+  export let view: { option?: boolean; popup?: boolean; web?: boolean } = {};
+
+  onMount(() => {
+    console.info('baseUrl:', baseUrl);
+    console.info('view:', view);
+  });
 </script>
 
 <main class="app-container">
@@ -19,26 +27,27 @@
   {/each}
 
   <div class="card">
-    <Router routes={routeDefinition}/>
+    <Router routes={routeDefinition} />
   </div>
 
   <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
+    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework
+    powered by Vite!
   </p>
 
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
 </main>
 
 <style lang="scss">
+  @use 'src/styles/base.scss';
+
   .app-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
   }
 
   .logo {
