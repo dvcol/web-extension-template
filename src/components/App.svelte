@@ -3,7 +3,9 @@
   import Router, { link } from 'svelte-spa-router';
 
   import svelteLogo from '~/assets/logo.svg';
+  import Suspense from '~/components/utils/Suspense.svelte';
   import { routeDefinition, routeMap } from '~/router/routes';
+  import { waitI18nReady } from '~/utils/i18n.utils';
 
   export let baseUrl: string = '';
   export let view: { option?: boolean; popup?: boolean; web?: boolean } = {};
@@ -15,27 +17,29 @@
 </script>
 
 <main class="app-container">
-  <div>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
+  <Suspense promise={waitI18nReady()}>
+    <div>
+      <a href="https://svelte.dev" target="_blank" rel="noreferrer">
+        <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
+      </a>
+    </div>
+    <h1>Vite + Svelte</h1>
 
-  {#each routeMap as route}
-    <a href={null} use:link={route.path}>{route.name}</a>
-  {/each}
+    {#each routeMap as route}
+      <a href={null} use:link={route.path}>{route.name}</a>
+    {/each}
 
-  <div class="card">
-    <Router routes={routeDefinition} />
-  </div>
+    <div class="card">
+      <Router routes={routeDefinition} />
+    </div>
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework
-    powered by Vite!
-  </p>
+    <p>
+      Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework
+      powered by Vite!
+    </p>
 
-  <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
+    <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
+  </Suspense>
 </main>
 
 <style lang="scss">
