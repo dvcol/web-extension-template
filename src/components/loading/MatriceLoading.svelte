@@ -1,5 +1,5 @@
 <div class="loading-container">
-  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <svg class="loader" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
     <rect width="7.33" height="7.33" x="1" y="1" fill="currentColor">
       <animate id="svgSpinnersBlocksWave0" attributeName="x" begin="0;svgSpinnersBlocksWave1.end+0.2s" dur="0.6s" values="1;4;1" />
       <animate attributeName="y" begin="0;svgSpinnersBlocksWave1.end+0.2s" dur="0.6s" values="1;4;1" />
@@ -67,9 +67,18 @@
     opacity: 1;
     transition: opacity 1s ease-in 0.2s;
 
-    /* Adds 0.2s delay and 1s transition to loading indicator to prevent flashing */
-    @starting-style {
-      opacity: 0;
+    .loader {
+      width: 4rem;
+      max-width: 8dvh;
+      height: 4rem;
+      max-height: 8dvh;
+      padding: 3dvh;
+
+      /* Adds 0.2s delay and 1s transition to loading indicator to prevent flashing */
+      // svelte-ignore at-rule-no-unknown
+      @starting-style {
+        opacity: 0;
+      }
     }
   }
 </style>
