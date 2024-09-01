@@ -12,8 +12,8 @@ importers:
         specifier: ^1.14.1
         version: 1.14.1
       '@dvcol/web-extension-utils':
-        specifier: ^3.3.2
-        version: 3.3.2
+        specifier: ^3.4.3
+        version: 3.4.3
       svelte:
         specifier: ^5.0.0-next.242
         version: 5.0.0-next.242
@@ -1054,8 +1054,8 @@ packages:
       postcss-scss:
         optional: true
 
-  '@dvcol/web-extension-utils@3.3.2':
-    resolution: {integrity: sha512-CEN2egNsUJIibttK9jigYdaWj5B1j1+lpGba9Uqv8nXpykSiRHW+5hs1GsKWwyNc00dBYaMckBpvZZ5z2agVUw==}
+  '@dvcol/web-extension-utils@3.4.3':
+    resolution: {integrity: sha512-88fWbVcEvYqxcVR6j0bV6Wo2jb05Ci3ADT35VS/OklesRBCurGJyrYvzGd/+0oTY1wiVNB1dhbxjuvZqMDVyPQ==}
     engines: {node: '>=16', pnpm: '>= 6.32.0'}
 
   '@esbuild/aix-ppc64@0.20.2':
@@ -7048,7 +7048,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@dvcol/web-extension-utils@3.3.2':
+  '@dvcol/web-extension-utils@3.4.3':
     dependencies:
       '@dvcol/common-utils': 1.14.1
       fast-glob: 3.3.2
@@ -8968,7 +8968,7 @@ snapshots:
       '@nodelib/fs.walk': 1.2.8
       glob-parent: 5.1.2
       merge2: 1.4.1
-      micromatch: 4.0.7
+      micromatch: 4.0.8
 
   fast-json-stable-stringify@2.1.0: {}
 

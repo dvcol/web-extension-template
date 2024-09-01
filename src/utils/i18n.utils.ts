@@ -1,3 +1,4 @@
+import { Logger } from '~/services/logger.service';
 import { I18nStore } from '~/stores/i18n-store.svelte';
 import { useI18nTranslate } from '~/utils/browser/browser-i18n.utils';
 import { chromeI18n } from '~/utils/browser/browser.utils';
@@ -9,7 +10,7 @@ import { chromeI18n } from '~/utils/browser/browser.utils';
  */
 export const useI18n = (...roots: string[]): ReturnType<typeof useI18nTranslate> => {
   if (!chromeI18n) {
-    I18nStore.init().catch(err => console.error('Failed to initialize i18n store', err));
+    I18nStore.init().catch(err => Logger.error('Failed to initialize i18n store', err));
     return (value, ...modules) => I18nStore.i18n(value, ...(modules?.length ? modules : roots));
   }
 

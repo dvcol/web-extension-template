@@ -1,5 +1,6 @@
+import { Logger } from '~/services/logger.service';
 import defineComponent from '~/web/define-component';
 
-defineComponent({ baseUrl: import.meta.env.VITE_BASE, view: { option: true, web: import.meta.env.VITE_WEB } })
-  .then(() => console.info('Web Component defined'))
-  .catch(err => console.error('Failed to define component', err));
+defineComponent({ baseUrl: import.meta.env.VITE_BASE, view: { option: true, web: import.meta.env.VITE_WEB ?? false } })
+  .then(() => Logger.info('Web Component defined'))
+  .catch(err => Logger.error('Failed to define component', err));
