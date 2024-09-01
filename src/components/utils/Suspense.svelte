@@ -1,31 +1,51 @@
+<script lang="ts" module>
+  import { type Snippet } from 'svelte';
+
+  export type SuspenseProps<R = any, E = any> = {
+    promise: Promise<R>;
+    delay?: number;
+    loading?: Snippet<[Promise<R>]>;
+    result?: Snippet<[R]>;
+    error?: Snippet<[E]>;
+    children?: Snippet;
+  };
+</script>
+
 <script lang="ts">
   import { wait } from '@dvcol/common-utils/common/promise';
   import { onMount } from 'svelte';
 
-  import { writable } from 'svelte/store';
-
   import MatriceLoading from '~/components/loading/MatriceLoading.svelte';
 
-  export let promise: Promise<unknown>;
-  export let delay: number = 500;
+  const { promise, delay = 500, loading, result, error, children }: SuspenseProps = $props();
 
-  const loading = writable(!delay);
+  let showLoading = $state(!delay);
 
   onMount(async () => {
     if (!delay) return;
     await wait(delay);
-    loading.set(true);
+    showLoading = true;
   });
 </script>
 
 {#await promise}
-  {#if $loading}
-    <slot name="loading" {promise}>
+  {#if showLoading}
+    {#if loading}
+      {@render loading(promise)}
+    {:else}
       <MatriceLoading />
-    </slot>
+    {/if}
   {/if}
-{:then result}
-  <slot {result} />
-{:catch error}
-  <slot name="error" {error} />
+{:then resolved}
+  {#if result}
+    {@render result(resolved)}
+  {:else if children}
+    {@render children()}
+  {/if}
+{:catch err}
+  {#if error}
+    {@render error(err)}
+  {:else}
+    <p style="color: red">{err?.message}</p>
+  {/if}
 {/await}

@@ -1,15 +1,15 @@
-import { derived, get, writable } from 'svelte/store';
-
 import type { Locale, Locales } from '~/models/i18n.model';
 import type { BrowserI18nInput } from '~/utils/browser/browser-i18n.utils';
 
-export class I18nStore {
-  private static _lang = writable<string>('en');
-  private static _locales = writable<Locales>({});
-  private static _locale = derived([this._locales, this._lang], ([$locales, $lang]) => $locales[$lang]);
-  private static _ready = writable<boolean>(false);
+let storeLang = $state<string>('en');
+let storeLocales = $state<Locales>({});
+let storeReady = $state<boolean>(false);
 
+const storeLocale = $derived(storeLocales[storeLang]);
+
+export class I18nStore {
   static async init() {
+    if (storeReady) return true;
     if (import.meta.hot) {
       console.debug('Listening to i18n HMR changes');
       import.meta.hot.send('fetch:i18n');
@@ -21,7 +21,7 @@ export class I18nStore {
         const response = await fetch(new URL('./_locales/en/messages.json', new URL(import.meta.url).origin));
         const locale = await response.json();
         I18nStore.addLocale(locale, 'en');
-        this._ready.set(true);
+        storeReady = true;
       } catch (err) {
         console.error('Failed to fetch locale', err);
       }
@@ -30,22 +30,22 @@ export class I18nStore {
   }
 
   static get ready() {
-    return get(this._ready);
+    return storeReady;
   }
 
   static get lang() {
-    return get(this._lang);
+    return storeLang;
   }
 
   static get locales() {
-    return get(this._locales);
+    return storeLocales;
   }
 
   static get locale() {
-    return get(this._locale);
+    return storeLocale;
   }
 
-  static i18n = (value: string | BrowserI18nInput, ...modules: string[]) => {
+  static i18n = (value: string | BrowserI18nInput, ...modules: string[]): string => {
     const path: string = Array.isArray(modules) ? modules.join('__') : modules;
 
     let key: string;
@@ -57,8 +57,9 @@ export class I18nStore {
       substitution = value?.substitutions;
     }
 
-    return derived(this._locale, $locale => {
-      let result: string = $locale?.[key]?.message || key;
+    // @see https://github.com/sveltejs/svelte/issues/12286#issuecomment-2207523621
+    const reactiveI18n = $derived.by(() => {
+      let result: string = storeLocale?.[key]?.message || key;
 
       if (substitution?.length) {
         for (let i = 0; i < substitution.length; i += 1) {
@@ -67,13 +68,18 @@ export class I18nStore {
       }
       return result;
     });
+    return reactiveI18n;
   };
 
   static addLocale = (_locale: Locale, _lang = this.lang, merge = false) => {
-    this._locales.set({
+    storeLocales = {
       ...this.locales,
       [_lang]: merge ? { ...this.locales[_lang], ..._locale } : _locale,
-    });
+    };
     return this.locales;
   };
+
+  static setLang(value: string) {
+    storeLang = value;
+  }
 }
