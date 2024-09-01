@@ -10,20 +10,20 @@
 
   import LazyComponent from '~/components/utils/LazyComponent.svelte';
   import Suspense from '~/components/utils/Suspense.svelte';
-  import { waitI18nReady } from '~/utils/i18n.utils';
+  import { Logger } from '~/services/logger.service';
+  import { initServices } from '~/web/init-services';
 
   const { baseUrl, view }: AppProps = $props();
 
   const HomeComponent = import('~/components/home/HomeComponent.svelte');
 
   onMount(() => {
-    console.info('baseUrl:', baseUrl);
-    console.info('view:', view);
+    Logger.info('baseUrl:', baseUrl);
   });
 </script>
 
 <div class="app-container">
-  <Suspense promise={waitI18nReady()}>
+  <Suspense promise={initServices(view)}>
     <LazyComponent component={HomeComponent} />
   </Suspense>
 </div>
