@@ -1,14 +1,17 @@
 import { LoggerColor } from '@dvcol/common-utils/common/logger';
 
-import type { VersionUpdateDetails } from '@dvcol/web-extension-utils/chrome/models';
+import type { MessagePayload } from '~/models/message.model';
 
+import { MessageType } from '~/models/message.model';
 import { Logger } from '~/services/logger.service';
 import { storage } from '~/utils/browser/browser-storage.utils';
 import { initLocalI18n } from '~/utils/i18n.utils';
 
-const onVersionUpdate = async (storageKey = 'version-update') => {
-  const versionUpdate = await storage.local.get<VersionUpdateDetails & { date: number }>(storageKey);
+const onVersionUpdate = async (storageKey = MessageType.VersionUpdate) => {
+  const versionUpdate = await storage.local.get<MessagePayload<typeof storageKey>>(storageKey);
   if (!versionUpdate) return;
+
+  Logger.debug('Version updated', versionUpdate);
 
   await storage.local.remove(storageKey);
 };

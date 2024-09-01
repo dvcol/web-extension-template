@@ -4,6 +4,7 @@ import type { DevToolsHook, DevToolsHooks } from '@vue/devtools';
 import type { Component, ComponentInternalInstance } from 'vue';
 import type { InitVueAppOption } from '~/web/init-vue-app';
 
+import { Logger } from '~/services/logger.service';
 import { initVueApp } from '~/web/init-vue-app';
 
 type ComponentInstance = ComponentInternalInstance & { provides: ComponentInternalInstance['appContext']['provides'] };
@@ -39,7 +40,7 @@ export const createElementInstance = (component: Component, { name, ...options }
           window.__VUE_DEVTOOLS_GLOBAL_HOOK__.emit('app:init' as DevToolsHooks, app, app.version, types);
           window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app;
 
-          console.info('Vue Devtools is enabled.');
+          Logger.info('Vue Devtools is enabled.');
         }
       }
 

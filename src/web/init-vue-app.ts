@@ -6,6 +6,7 @@ import type { App, Component } from 'vue';
 
 import type { RouterOptions } from '~/router';
 
+import { Logger } from '~/services/logger.service';
 import { RouterService } from '~/services/router.service';
 import { initServices } from '~/web/init-services';
 
@@ -22,7 +23,7 @@ export const initVueApp = (component: Component, options: InitVueAppOption = {})
   if (!router) router = RouterService.init(options);
   app.use(router);
 
-  initServices(options.view).catch(error => console.error('Failed to initialized services.', error));
+  initServices(options.view).catch(error => Logger.error('Failed to initialized services.', error));
 
   return app;
 };

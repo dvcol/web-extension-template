@@ -1,3 +1,5 @@
+import { Logger } from '~/services/logger.service';
+
 export enum WebComponents {
   WebExtensionTemplate = 'wc-web-extension-template',
 }
@@ -7,7 +9,7 @@ export type DefineComponent = (options?: DefineOption, component?: WebComponents
 
 export const defineComponent = async (options: DefineOption = {}, component: WebComponents = WebComponents.WebExtensionTemplate) => {
   if (customElements.get(component)) {
-    console.warn(`Custom element '${component}' is already defined.`);
+    Logger.warn(`Custom element '${component}' is already defined.`);
   } else {
     const [{ createElementInstance }, { lazyComponent }] = await Promise.all([import('~/web/create-wc'), import('~/utils/lazy.utils')]);
     const ContainerComponent = lazyComponent(() => import('~/components/container/ContainerComponent.ce.vue'));

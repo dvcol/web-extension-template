@@ -1,5 +1,6 @@
 import type { Locale, Locales } from '~/models/i18n.model';
 
+import { Logger } from '~/services/logger.service';
 import { useI18nStore } from '~/stores/i18n.store';
 import { useI18nTranslate } from '~/utils/browser/browser-i18n.utils';
 import { chromeI18n } from '~/utils/browser/browser.utils';
@@ -8,7 +9,7 @@ export const initLocalI18n = () => {
   const store = useI18nStore();
   let promise: Promise<Locales | void> | undefined;
   if (import.meta.hot) {
-    console.debug('Listening to i18n HMR changes');
+    Logger.debug('Listening to i18n HMR changes');
     import.meta.hot.send('fetch:i18n');
     import.meta.hot.on('update:i18n', (data: { lang: string; locale: Locale }[]) => {
       data?.forEach(({ lang, locale }) => store.addLocale(locale, lang, true));
@@ -17,7 +18,7 @@ export const initLocalI18n = () => {
     promise = fetch(new URL(`./_locales/${store.lang}/messages.json`, new URL(import.meta.url).origin))
       .then(r => r.json())
       .then((locale: Locale) => store.addLocale(locale))
-      .catch(err => console.error(`Failed to fetch locale '${store.lang}'`, err));
+      .catch(err => Logger.error(`Failed to fetch locale '${store.lang}'`, err));
   }
 
   return { store, promise };
