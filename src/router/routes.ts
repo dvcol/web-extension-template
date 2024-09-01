@@ -1,6 +1,5 @@
+import { type RouteDefinition, type WrappedComponent } from 'svelte-spa-router';
 import wrap from 'svelte-spa-router/wrap';
-
-import type { RouteDefinition, WrappedComponent } from 'svelte-spa-router';
 
 export const Route: Record<
   string,
@@ -14,14 +13,14 @@ export const Route: Record<
     name: 'hello',
     path: '/hello',
     component: wrap({
-      asyncComponent: () => import('~/components/hello/HelloComponent.svelte'),
+      asyncComponent: () => import('~/components/hello/HelloComponent.svelte') as any,
     }),
   },
   Goodbye: {
     name: 'goodbye',
     path: '/goodbye',
     component: wrap({
-      asyncComponent: () => import('~/components/goodbye/GoodbyeComponent.svelte'),
+      asyncComponent: () => import('~/components/goodbye/GoodbyeComponent.svelte') as any,
     }),
   },
 } as const;
