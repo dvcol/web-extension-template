@@ -1,19 +1,25 @@
 import type { RouteRecordRaw } from 'vue-router';
 
+export enum Route {
+  Home = 'home',
+  Hello = 'hello',
+  Goodbye = 'goodbye',
+}
+
 export const routes: RouteRecordRaw[] = [
   {
     path: `/`,
-    name: 'home',
+    name: Route.Home,
     redirect: { name: 'hello' },
   },
   {
-    path: `/hello`,
-    name: 'hello',
-    component: () => import('../components/views/hello/HelloComponent.vue'),
+    path: `/${Route.Hello}`,
+    name: Route.Hello,
+    component: () => import('~/components/views/hello/HelloComponent.vue'),
   },
   {
-    path: `/goodbye`,
-    name: 'goodbye',
-    component: () => import('../components/views/goodbye/GoodbyeComponent.vue'),
+    path: `/${Route.Goodbye}`,
+    name: Route.Goodbye,
+    component: () => import('~/components/views/goodbye/GoodbyeComponent.vue'),
   },
 ];
