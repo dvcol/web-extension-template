@@ -1,4 +1,5 @@
-import AppComponent from '~/components/AppComponent.vue';
-import { mountVueApp } from '~/main';
+import defineComponent from '~/web/define-component';
 
-mountVueApp('#app-options', AppComponent);
+defineComponent({ baseUrl: import.meta.env.VITE_BASE, view: { option: true, web: import.meta.env.VITE_WEB } })
+  .then(() => console.info('Web Component defined', import.meta.env))
+  .catch(err => console.error('Failed to define component', err));
