@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { RouterLink } from 'vue-router';
 
+import { Route } from '~/router';
 import { useI18n } from '~/utils/i18n.utils';
 
 const i18n = useI18n('hello');
@@ -9,7 +10,7 @@ const i18n = useI18n('hello');
 <template>
   <div class="text">
     <span class="title">{{ i18n('app_name', 'global') }}</span>
-    <RouterLink to="goodbye">{{ i18n('title') }}</RouterLink>
+    <RouterLink :to="Route.Goodbye">{{ i18n('title') }}</RouterLink>
   </div>
 </template>
 
