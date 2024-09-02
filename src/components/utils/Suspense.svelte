@@ -46,6 +46,9 @@
   {#if error}
     {@render error(err)}
   {:else}
-    <p style="color: red">{err?.message}</p>
+    <p style="color: red">{err?.message ?? err}</p>
+    {#if err?.stack}
+      <p style="color: red">{err.stack}</p>
+    {/if}
   {/if}
 {/await}
