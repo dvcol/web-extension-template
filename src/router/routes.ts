@@ -1,7 +1,13 @@
 import { type RouteDefinition, type WrappedComponent } from 'svelte-spa-router';
+
 import wrap from 'svelte-spa-router/wrap';
 
-export const Route: Record<
+export const Route = {
+  Hello: 'hello',
+  Goodbye: 'goodbye',
+} as const;
+
+export const Routes: Record<
   string,
   {
     name: string;
@@ -10,31 +16,31 @@ export const Route: Record<
   }
 > = {
   Hello: {
-    name: 'hello',
-    path: '/hello',
+    name: Route.Hello,
+    path: `/${Route.Hello}`,
     component: wrap({
-      asyncComponent: () => import('~/components/hello/HelloComponent.svelte') as any,
+      asyncComponent: () => import('~/components/hello/HelloComponent.svelte'),
     }),
   },
   Goodbye: {
-    name: 'goodbye',
-    path: '/goodbye',
+    name: Route.Goodbye,
+    path: `/${Route.Goodbye}`,
     component: wrap({
-      asyncComponent: () => import('~/components/goodbye/GoodbyeComponent.svelte') as any,
+      asyncComponent: () => import('~/components/goodbye/GoodbyeComponent.svelte'),
     }),
   },
 } as const;
 
-export const routeMap = Object.values(Route).map(route => ({ name: route.name, path: route.path }));
+export const routeMap = Object.values(Routes).map(route => ({ name: route.name, path: route.path }));
 
 export const routeDefinition: RouteDefinition = {
   // Home
-  '/': Route.Hello.component,
+  '/': Routes.Hello.component,
 
   // Routes
-  [Route.Hello.path]: Route.Hello.component,
-  [Route.Goodbye.path]: Route.Goodbye.component,
+  [Routes.Hello.path]: Routes.Hello.component,
+  [Routes.Goodbye.path]: Routes.Goodbye.component,
 
   // Catch-all
-  '*': Route.Hello.component,
+  '*': Routes.Hello.component,
 };
