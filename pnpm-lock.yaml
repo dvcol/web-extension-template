@@ -18,8 +18,8 @@ importers:
         specifier: ^5.0.0-next.242
         version: 5.0.0-next.242
       svelte-spa-router:
-        specifier: ^4.0.1
-        version: 4.0.1
+        specifier: git://github.com/dvcol/svelte-spa-router.git#main
+        version: https://codeload.github.com/dvcol/svelte-spa-router/tar.gz/82ac135f523427d4ad511db76fe1987fb50a4472
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.4.1
@@ -5284,8 +5284,9 @@ packages:
       typescript:
         optional: true
 
-  svelte-spa-router@4.0.1:
-    resolution: {integrity: sha512-2JkmUQ2f9jRluijL58LtdQBIpynSbem2eBGp4zXdi7aDY1znbR6yjw0KsonD0aq2QLwf4Yx4tBJQjxIjgjXHKg==}
+  svelte-spa-router@https://codeload.github.com/dvcol/svelte-spa-router/tar.gz/82ac135f523427d4ad511db76fe1987fb50a4472:
+    resolution: {tarball: https://codeload.github.com/dvcol/svelte-spa-router/tar.gz/82ac135f523427d4ad511db76fe1987fb50a4472}
+    version: 4.0.1
 
   svelte@5.0.0-next.242:
     resolution: {integrity: sha512-toHIaInuvpJl/3cWV3FBJV5fuUCUsdr1SzlvhYqlga1E5RK5qmbOK3hHd9GNz/VIcLwDDuMM/n2u/azm0kEuLA==}
@@ -10454,23 +10455,23 @@ snapshots:
 
   possible-typed-array-names@1.0.0: {}
 
-  postcss-html@0.36.0(postcss-syntax@0.36.2)(postcss@7.0.39):
+  postcss-html@0.36.0(postcss-syntax@0.36.2(postcss-html@0.36.0)(postcss-scss@4.0.9(postcss@8.4.41))(postcss@8.4.41))(postcss@7.0.39):
     dependencies:
       htmlparser2: 3.10.1
       postcss: 7.0.39
-      postcss-syntax: 0.36.2(postcss-html@0.36.0)(postcss-scss@4.0.9(postcss@8.4.41))(postcss@8.4.41)
+      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2)(postcss@8.4.41))(postcss-jsx@0.36.4)(postcss-less@3.1.4)(postcss-markdown@0.36.0)(postcss-scss@2.1.1)(postcss@7.0.39)
 
   postcss-html@0.36.0(postcss-syntax@0.36.2)(postcss@8.4.41):
     dependencies:
       htmlparser2: 3.10.1
       postcss: 8.4.41
-      postcss-syntax: 0.36.2(postcss-html@0.36.0)(postcss-scss@4.0.9(postcss@8.4.41))(postcss@8.4.41)
+      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2)(postcss@8.4.41))(postcss-jsx@0.36.4)(postcss-less@3.1.4)(postcss-markdown@0.36.0)(postcss-scss@2.1.1)(postcss@7.0.39)
 
   postcss-jsx@0.36.4(postcss-syntax@0.36.2)(postcss@7.0.39):
     dependencies:
       '@babel/core': 7.24.6
       postcss: 7.0.39
-      postcss-syntax: 0.36.2(postcss-html@0.36.0)(postcss-scss@4.0.9(postcss@8.4.41))(postcss@8.4.41)
+      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2)(postcss@8.4.41))(postcss-jsx@0.36.4)(postcss-less@3.1.4)(postcss-markdown@0.36.0)(postcss-scss@2.1.1)(postcss@7.0.39)
     transitivePeerDependencies:
       - supports-color
 
@@ -10496,7 +10497,7 @@ snapshots:
   postcss-markdown@0.36.0(postcss-syntax@0.36.2)(postcss@7.0.39):
     dependencies:
       postcss: 7.0.39
-      postcss-syntax: 0.36.2(postcss-html@0.36.0)(postcss-scss@4.0.9(postcss@8.4.41))(postcss@8.4.41)
+      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2)(postcss@8.4.41))(postcss-jsx@0.36.4)(postcss-less@3.1.4)(postcss-markdown@0.36.0)(postcss-scss@2.1.1)(postcss@7.0.39)
       remark: 10.0.1
       unist-util-find-all-after: 1.0.5
 
@@ -10563,12 +10564,15 @@ snapshots:
     dependencies:
       postcss: 8.4.38
 
-  postcss-syntax@0.36.2(postcss-html@0.36.0)(postcss-scss@4.0.9(postcss@8.4.41))(postcss@8.4.41):
+  postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2)(postcss@8.4.41))(postcss-jsx@0.36.4)(postcss-less@3.1.4)(postcss-markdown@0.36.0)(postcss-scss@2.1.1)(postcss@7.0.39):
     dependencies:
-      postcss: 8.4.41
+      postcss: 7.0.39
     optionalDependencies:
       postcss-html: 0.36.0(postcss-syntax@0.36.2)(postcss@8.4.41)
-      postcss-scss: 4.0.9(postcss@8.4.41)
+      postcss-jsx: 0.36.4(postcss-syntax@0.36.2)(postcss@7.0.39)
+      postcss-less: 3.1.4
+      postcss-markdown: 0.36.0(postcss-syntax@0.36.2)(postcss@7.0.39)
+      postcss-scss: 2.1.1
 
   postcss-value-parser@3.3.1: {}
 
@@ -11410,7 +11414,7 @@ snapshots:
       normalize-selector: 0.2.0
       pify: 4.0.1
       postcss: 7.0.39
-      postcss-html: 0.36.0(postcss-syntax@0.36.2)(postcss@7.0.39)
+      postcss-html: 0.36.0(postcss-syntax@0.36.2(postcss-html@0.36.0)(postcss-scss@4.0.9(postcss@8.4.41))(postcss@8.4.41))(postcss@7.0.39)
       postcss-jsx: 0.36.4(postcss-syntax@0.36.2)(postcss@7.0.39)
       postcss-less: 3.1.4
       postcss-markdown: 0.36.0(postcss-syntax@0.36.2)(postcss@7.0.39)
@@ -11421,7 +11425,7 @@ snapshots:
       postcss-sass: 0.3.5
       postcss-scss: 2.1.1
       postcss-selector-parser: 3.1.2
-      postcss-syntax: 0.36.2(postcss-html@0.36.0)(postcss-scss@4.0.9(postcss@8.4.41))(postcss@8.4.41)
+      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2)(postcss@8.4.41))(postcss-jsx@0.36.4)(postcss-less@3.1.4)(postcss-markdown@0.36.0)(postcss-scss@2.1.1)(postcss@7.0.39)
       postcss-value-parser: 3.3.1
       resolve-from: 4.0.0
       signal-exit: 3.0.7
@@ -11511,7 +11515,7 @@ snapshots:
       sugarss: 2.0.0
       typescript: 5.5.4
 
-  svelte-spa-router@4.0.1:
+  svelte-spa-router@https://codeload.github.com/dvcol/svelte-spa-router/tar.gz/82ac135f523427d4ad511db76fe1987fb50a4472:
     dependencies:
       regexparam: 2.0.2
 

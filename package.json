@@ -55,7 +55,7 @@
     "@dvcol/common-utils": "^1.14.1",
     "@dvcol/web-extension-utils": "^3.4.3",
     "svelte": "^5.0.0-next.242",
-    "svelte-spa-router": "^4.0.1"
+    "svelte-spa-router": "git://github.com/dvcol/svelte-spa-router.git#main"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.1",
