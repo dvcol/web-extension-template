@@ -10,7 +10,10 @@ let storeReady = $state<boolean>(false);
 const storeLocale = $derived(storeLocales[storeLang]);
 
 export class I18nStore {
-  static async init() {
+  static baseUri?: string;
+
+  static async init(baseUri: string = './') {
+    this.baseUri = baseUri;
     if (storeReady) return true;
     if (import.meta.hot) {
       Logger.debug('Listening to i18n HMR changes');
@@ -20,7 +23,7 @@ export class I18nStore {
       });
     } else if (!I18nStore.locale) {
       try {
-        const response = await fetch(new URL('./_locales/en/messages.json', new URL(import.meta.url).origin));
+        const response = await fetch(new URL(`${this.baseUri}_locales/en/messages.json`, new URL(import.meta.url).origin));
         const locale = await response.json();
         I18nStore.addLocale(locale, 'en');
         storeReady = true;
