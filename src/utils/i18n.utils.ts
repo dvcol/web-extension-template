@@ -10,7 +10,7 @@ import { chromeI18n } from '~/utils/browser/browser.utils';
  */
 export const useI18n = (...roots: string[]): ReturnType<typeof useI18nTranslate> => {
   if (!chromeI18n) {
-    I18nStore.init().catch(err => Logger.error('Failed to initialize i18n store', err));
+    I18nStore.init(import.meta.env.VITE_BASE).catch(err => Logger.error('Failed to initialize i18n store', err));
     return (value, ...modules) => I18nStore.i18n(value, ...(modules?.length ? modules : roots));
   }
 
@@ -18,6 +18,6 @@ export const useI18n = (...roots: string[]): ReturnType<typeof useI18nTranslate>
 };
 
 export const waitI18nReady = async (): Promise<boolean> => {
-  if (!chromeI18n) return I18nStore.init();
+  if (!chromeI18n) return I18nStore.init(import.meta.env.VITE_BASE);
   return Promise.resolve(true);
 };
