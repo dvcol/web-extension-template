@@ -6,7 +6,7 @@ import { useI18nStore } from '~/stores/i18n.store';
 import { useI18nTranslate } from '~/utils/browser/browser-i18n.utils';
 import { chromeI18n } from '~/utils/browser/browser.utils';
 
-export const initLocalI18n = () => {
+export const initLocalI18n = (baseUrl = RouterService.baseUrl) => {
   const store = useI18nStore();
   let promise: Promise<Locales | void> | undefined;
   if (import.meta.hot) {
@@ -16,7 +16,7 @@ export const initLocalI18n = () => {
       data?.forEach(({ lang, locale }) => store.addLocale(locale, lang, true));
     });
   } else if (!store.locales?.[store.lang]) {
-    promise = fetch(new URL(`${RouterService.baseUrl}_locales/${store.lang}/messages.json`, new URL(import.meta.url).origin))
+    promise = fetch(new URL(`${baseUrl}_locales/${store.lang}/messages.json`, new URL(import.meta.url).origin))
       .then(r => r.json())
       .then((locale: Locale) => store.addLocale(locale))
       .catch(err => Logger.error(`Failed to fetch locale '${store.lang}'`, err));
