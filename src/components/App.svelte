@@ -28,7 +28,7 @@
   </Suspense>
 </div>
 
-<style lang="scss">
+<style lang="scss" global>
   @use 'src/styles/base.scss';
 
   .app-container {
