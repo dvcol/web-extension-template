@@ -21,6 +21,7 @@ export class I18nStore {
       import.meta.hot.on('update:i18n', (data: { lang: string; locale: Locale }[]) => {
         data?.forEach(({ lang, locale }) => I18nStore.addLocale(locale, lang, true));
       });
+      storeReady = true;
     } else if (!I18nStore.locale) {
       try {
         const response = await fetch(new URL(`${this.baseUri}_locales/en/messages.json`, new URL(import.meta.url).origin));
