@@ -110,9 +110,9 @@ const getPlugins = (_isDev: boolean, _isWeb: boolean): PluginOption[] => {
         registerType: 'autoUpdate',
         includeAssets: ['**/favicon.ico', '**/*.svg', '**/*.png', '**/*.webp', '**/*.json'],
         manifest: {
-          name: 'Web Extension Template',
-          short_name: 'web-extension-template',
-          description: 'Web Extension Template',
+          name: pkg.title || pkg.name,
+          short_name: 'Web Extension Template',
+          description: pkg.description,
           theme_color: '#41b883',
           background_color: '#ffffff',
           display: 'standalone',
