@@ -46,7 +46,7 @@
     "test:watch": "vitest --mode testing",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "style": "stylelint **/*.{svelete,css,scss,less,html} --go '{\"gitignore\":true}'",
+    "style": "stylelint **/*.{svelte,css,scss,less,html} --go '{\"gitignore\":true}'",
     "style:fix": "pnpm run style --fix",
     "release": "standard-version",
     "release:changelog": "extract-changelog-release > RELEASE.md"
