@@ -6,8 +6,6 @@
   /* height */
   --full-height: 100dvh;
   --half-height: 50dvh;
-  --height-40-dvh: 40dvh;
-  --height-70-dvh: 70dvh;
 
   /** safe area */
   --safe-area-inset-top: env(safe-area-inset-top);
@@ -18,6 +16,16 @@
   /** width */
   --full-width: 100dvw;
   --half-width: 50dvw;
+
+  @media (display-mode: standalone) {
+    /* height */
+    --full-height: 100vh;
+    --half-height: 50vh;
+
+    /** width */
+    --full-width: 100vw;
+    --half-width: 50vw;
+  }
 
   /* font variables */
   --font-size-xxs: 0.625rem;
