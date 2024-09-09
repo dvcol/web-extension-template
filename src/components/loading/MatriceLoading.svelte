@@ -75,7 +75,6 @@
       padding: 3dvh;
 
       /* Adds 0.2s delay and 1s transition to loading indicator to prevent flashing */
-      // svelte-ignore at-rule-no-unknown
       @starting-style {
         opacity: 0;
       }
