@@ -3,10 +3,10 @@
   import type { SuspenseProps } from '~/components/utils/Suspense.svelte';
 
   export type LazyComponentProps = {
-    component: Promise<{ default: Component }>;
+    component: Promise<{ default: Component<any, any, any> }>;
     props?: Record<string, any>;
     children?: Snippet;
-  } & Pick<SuspenseProps<{ default: Component }>, 'loading' | 'error'>;
+  } & Pick<SuspenseProps<{ default: Component<any, any, any> }>, 'loading' | 'error'>;
 </script>
 
 <script lang="ts">
