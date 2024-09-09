@@ -3,10 +3,10 @@ import { dirname, join, relative } from 'path';
 import { fileURLToPath, URL } from 'url';
 
 import { svelte } from '@sveltejs/vite-plugin-svelte';
-import preprocess from 'svelte-preprocess';
+import { sveltePreprocess } from 'svelte-preprocess';
 
 import { defineConfig } from 'vite';
-import checker from 'vite-plugin-checker';
+import { checker } from 'vite-plugin-checker';
 import { VitePWA } from 'vite-plugin-pwa';
 
 import pkg from './package.json';
@@ -40,7 +40,7 @@ const i18nRegex = /.*src\/i18n\/([a-zA-Z]+)\/.*\.json/;
 const getPlugins = (_isDev: boolean, _isWeb: boolean): PluginOption[] => {
   const plugins: PluginOption[] = [
     svelte({
-      preprocess: preprocess(),
+      preprocess: sveltePreprocess(),
       emitCss: false,
     }),
     checker({
