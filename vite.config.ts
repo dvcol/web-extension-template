@@ -7,6 +7,7 @@ import { sveltePreprocess } from 'svelte-preprocess';
 
 import { defineConfig } from 'vite';
 import { checker } from 'vite-plugin-checker';
+import dtsPlugin from 'vite-plugin-dts';
 import { VitePWA } from 'vite-plugin-pwa';
 
 import pkg from './package.json';
@@ -100,6 +101,11 @@ const getPlugins = (_isDev: boolean, _isWeb: boolean): PluginOption[] => {
 
   if (!_isDev && _isWeb) {
     plugins.push(
+      dtsPlugin({
+        include: ['index.ts', 'web/define-component.ts'],
+        entryRoot: resolveParent('src'),
+        outDir: resolveParent('dist/lib'),
+      }),
       VitePWA({
         scope: '/web-extension-template/',
         registerType: 'autoUpdate',
@@ -163,6 +169,7 @@ export default defineConfig(() => ({
     sourcemap: isDev || sourcemap ? 'inline' : false,
     minify: false,
     rollupOptions: {
+      preserveEntrySignatures: 'allow-extension',
       input: getInput(isDev, isWeb),
       output: {
         minifyInternalExports: false,

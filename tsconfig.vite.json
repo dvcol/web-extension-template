@@ -5,10 +5,11 @@
     "vitest.setup.ts",
     "svelte.config.js",
     ".eslintrc.cjs",
-    "scripts/**/*.ts",
     "README*md/*.ts",
     "scripts/*",
+    "scripts/*.ts",
     "scripts/**/*",
+    "scripts/**/*.ts",
     "package.json"
   ],
   "compilerOptions": {
