@@ -17,16 +17,6 @@
   --full-width: 100dvw;
   --half-width: 50dvw;
 
-  @media (display-mode: standalone) {
-    /* height */
-    --full-height: 100vh;
-    --half-height: 50vh;
-
-    /** width */
-    --full-width: 100vw;
-    --half-width: 50vw;
-  }
-
   /* font variables */
   --font-size-xxs: 0.625rem;
   --font-size-xs: 0.75rem;
@@ -107,4 +97,14 @@
   --image-box-shadow: 0 0 20px 9px rgb(255 255 255 / 10%);
   --image-box-shadow-hover: 0 0 20px 9px rgb(255 255 255 / 18%);
   --card-box-shadow: 0 1px 2px -2px rgb(0 0 0 / 24%), 0 3px 6px 0 rgb(0 0 0 / 18%), 0 5px 12px 4px rgb(0 0 0 / 12%);
+
+  @media (display-mode: standalone) {
+    /* height */
+    --full-height: 100vh;
+    --half-height: 50vh;
+
+    /** width */
+    --full-width: 100vw;
+    --half-width: 50vw;
+  }
 }
