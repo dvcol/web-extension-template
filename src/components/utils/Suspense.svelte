@@ -38,7 +38,7 @@
   {/if}
 {:then resolved}
   {#if result}
-    {@render result(resolved)}
+    {@render result(resolved?.default)}
   {:else if children}
     {@render children()}
   {/if}
