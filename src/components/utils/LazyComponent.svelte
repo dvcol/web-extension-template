@@ -16,7 +16,7 @@
 </script>
 
 <Suspense promise={component} {loading} {error}>
-  {#snippet result({ default: Component })}
+  {#snippet result(Component)}
     <Component {..._props}>
       {@render children?.()}
     </Component>

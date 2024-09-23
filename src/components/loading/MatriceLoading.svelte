@@ -68,11 +68,11 @@
     transition: opacity 1s ease-in 0.2s;
 
     .loader {
-      width: 4rem;
+      width: 3rem;
       max-width: 8dvh;
-      height: 4rem;
+      height: 3rem;
       max-height: 8dvh;
-      padding: 3dvh;
+      margin: 2rem;
 
       /* Adds 0.2s delay and 1s transition to loading indicator to prevent flashing */
       @starting-style {
