@@ -36,7 +36,7 @@
     "vite:preview": "vite preview",
     "svelte:check": "svelte-check --tsconfig ./tsconfig.json --compiler-warnings \"css-unused-selector:ignore\"",
     "svelte:watch": "pnpm run svelte:check --watch",
-    "dev": "cross-env NODE_ENV=development run-s dist vite:serve",
+    "dev": "cross-env NODE_ENV=development run-p dist vite:serve",
     "dev:web": "VITE_SOURCEMAP=true VITE_WEB=true VITE_BASE=/web-extension-template/ run-s dev",
     "build": "cross-env NODE_ENV=production run-s dist svelte:check 'vite:build {@}' --",
     "build:web": "VITE_WEB=true VITE_BASE=/web-extension-template/ run-s build",
@@ -52,10 +52,10 @@
     "release:changelog": "extract-changelog-release > RELEASE.md"
   },
   "dependencies": {
-    "@dvcol/common-utils": "^1.14.1",
+    "@dvcol/common-utils": "^1.17.0",
+    "@dvcol/svelte-simple-router": "^1.1.0",
     "@dvcol/web-extension-utils": "^3.4.3",
-    "svelte": "next",
-    "svelte-spa-router": "git://github.com/dvcol/svelte-spa-router.git#main"
+    "svelte": "next"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.1",

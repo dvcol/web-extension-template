@@ -1,46 +1,42 @@
-import { type RouteDefinition, type WrappedComponent } from 'svelte-spa-router';
+import type { Route, RouterOptions } from '@dvcol/svelte-simple-router/models';
 
-import wrap from 'svelte-spa-router/wrap';
-
-export const Route = {
+export const RouteName = {
   Hello: 'hello',
   Goodbye: 'goodbye',
+  Home: 'home',
+  Any: 'any',
 } as const;
 
-export const Routes: Record<
-  string,
+export type RouteNames = (typeof RouteName)[keyof typeof RouteName];
+
+export const routes: Readonly<Route<RouteNames>[]> = [
   {
-    name: string;
-    path: string;
-    component: WrappedComponent;
-  }
-> = {
-  Hello: {
-    name: Route.Hello,
-    path: `/${Route.Hello}`,
-    component: wrap({
-      asyncComponent: () => import('~/components/hello/HelloComponent.svelte'),
-    }),
+    name: RouteName.Home,
+    path: '/',
+    redirect: {
+      name: RouteName.Hello,
+    },
   },
-  Goodbye: {
-    name: Route.Goodbye,
-    path: `/${Route.Goodbye}`,
-    component: wrap({
-      asyncComponent: () => import('~/components/goodbye/GoodbyeComponent.svelte'),
-    }),
+  {
+    name: RouteName.Hello,
+    path: `/${RouteName.Hello}`,
+    component: () => import('~/components/hello/HelloComponent.svelte'),
   },
+  {
+    name: RouteName.Goodbye,
+    path: `/${RouteName.Goodbye}`,
+    component: () => import('~/components/goodbye/GoodbyeComponent.svelte'),
+  },
+  {
+    name: RouteName.Any,
+    path: '*',
+    redirect: {
+      name: RouteName.Hello,
+    },
+  },
+] as const;
+
+export const options: RouterOptions<RouteNames> = {
+  hash: true,
+  routes,
 } as const;
-
-export const routeMap = Object.values(Routes).map(route => ({ name: route.name, path: route.path }));
-
-export const routeDefinition: RouteDefinition = {
-  // Home
-  '/': Routes.Hello.component,
-
-  // Routes
-  [Routes.Hello.path]: Routes.Hello.component,
-  [Routes.Goodbye.path]: Routes.Goodbye.component,
-
-  // Catch-all
-  '*': Routes.Hello.component,
-};

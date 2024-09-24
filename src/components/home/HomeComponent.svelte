@@ -1,8 +1,10 @@
 <script lang="ts">
-  import Router, { link } from 'svelte-spa-router';
+  import { RouterContext, RouterView } from '@dvcol/svelte-simple-router/components';
+  import { link } from '@dvcol/svelte-simple-router/router';
+  import { transition } from '@dvcol/svelte-simple-router/utils';
 
   import svelteLogo from '~/assets/logo.svg';
-  import { routeDefinition, routeMap } from '~/router/routes';
+  import { options, RouteName } from '~/router/routes';
   import { useI18n } from '~/utils/i18n.utils';
 
   const i18n = useI18n('home');
@@ -16,13 +18,14 @@
   </div>
   <h1>{i18n('title')}</h1>
 
-  {#each routeMap as route}
-    <a href={null} use:link={route.path}>{route.name}</a>
-  {/each}
+  <RouterContext {options}>
+    <a href={null} use:link={{ path: `/${RouteName.Hello}` }}>{RouteName.Hello}</a>
+    <a href={`/${RouteName.Goodbye}`} use:link>{RouteName.Goodbye}</a>
 
-  <div class="card">
-    <Router routes={routeDefinition} />
-  </div>
+    <div class="view">
+      <RouterView {transition} />
+    </div>
+  </RouterContext>
 
   <p>
     Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework
@@ -47,6 +50,11 @@
     padding: 1.5em;
     transition: filter 300ms;
     will-change: filter;
+  }
+
+  .view {
+    min-height: 10rem;
+    padding: 2rem;
   }
 
   .logo:hover {
