@@ -3,7 +3,6 @@ import { dirname, join, relative } from 'path';
 import { fileURLToPath, URL } from 'url';
 
 import vue from '@vitejs/plugin-vue';
-import { viteVueCE } from 'unplugin-vue-ce';
 
 import { defineConfig } from 'vite';
 import { checker } from 'vite-plugin-checker';
@@ -41,9 +40,10 @@ const i18nRegex = /.*src\/i18n\/([a-zA-Z]+)\/.*\.json/;
 const getPlugins = (_isDev: boolean, _isWeb: boolean): PluginOption[] => {
   const plugins: PluginOption[] = [
     vue({
-      customElement: true,
+      features: {
+        customElement: true,
+      },
     }),
-    viteVueCE({}),
     checker({
       vueTsc: {
         tsconfigPath: 'tsconfig.app.json',
