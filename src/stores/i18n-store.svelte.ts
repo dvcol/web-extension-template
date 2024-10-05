@@ -5,7 +5,7 @@ import { Logger } from '~/services/logger.service';
 
 let storeLang = $state<string>('en');
 let storeLocales = $state<Locales>({});
-let storeReady = $state<boolean>(false);
+let storeReady = false;
 
 const storeLocale = $derived(storeLocales[storeLang]);
 
@@ -14,7 +14,7 @@ export class I18nStore {
 
   static async init(baseUri: string = './') {
     this.baseUri = baseUri;
-    if (storeReady) return true;
+    if (this.ready) return true;
     if (import.meta.hot) {
       Logger.debug('Listening to i18n HMR changes');
       import.meta.hot.send('fetch:i18n');
