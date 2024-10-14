@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@dvcol/common-utils':
-        specifier: ^1.17.0
-        version: 1.17.0
+        specifier: ^1.17.2
+        version: 1.17.2
       '@dvcol/svelte-simple-router':
         specifier: ^1.3.0
         version: 1.3.0(@types/node@22.5.1)(sass@1.77.8)(sugarss@2.0.0)(svelte@5.0.0-next.244)(terser@5.31.6)
       '@dvcol/web-extension-utils':
-        specifier: ^3.4.3
-        version: 3.4.3
+        specifier: ^3.4.4
+        version: 3.4.4
       svelte:
         specifier: next
         version: 5.0.0-next.244
@@ -963,10 +963,6 @@ packages:
   '@dual-bundle/import-meta-resolve@4.1.0':
     resolution: {integrity: sha512-+nxncfwHM5SgAtrVzgpzJOI1ol0PkumhVo469KCf9lUi21IGcY90G98VuHm9VRrUypmAzawAHO9bs6hqeADaVg==}
 
-  '@dvcol/common-utils@1.17.0':
-    resolution: {integrity: sha512-vqdFOzb0/X/R9mR6oaXuaSYWaZPDlU7ZwoXKBDx4COg4lnNcmQz8mR425f/UstrfW03urPg8VbYEvf6LmYTz8A==}
-    engines: {node: '>=20', pnpm: '>= 8'}
-
   '@dvcol/common-utils@1.17.2':
     resolution: {integrity: sha512-0IbM2B05gVcp+SgRprOJepGAP2ZwQh9kSS8Bz5kk2jHZy35CCB8z7wQH/B9wqEkq4jlWIFJH1I6DKiylui0lzA==}
     engines: {node: '>=20', pnpm: '>= 8'}
@@ -1073,8 +1069,8 @@ packages:
     peerDependencies:
       svelte: '>=5'
 
-  '@dvcol/web-extension-utils@3.4.3':
-    resolution: {integrity: sha512-88fWbVcEvYqxcVR6j0bV6Wo2jb05Ci3ADT35VS/OklesRBCurGJyrYvzGd/+0oTY1wiVNB1dhbxjuvZqMDVyPQ==}
+  '@dvcol/web-extension-utils@3.4.4':
+    resolution: {integrity: sha512-LQBB/UPk8TVf/8eb4coLfFxP0kpeFW1BRhCbj+vWy96+qgMbmDHNo8N4rCg3tv8epVQtrXHclgJ28UG8vnDygg==}
     engines: {node: '>=16', pnpm: '>= 6.32.0'}
 
   '@esbuild/aix-ppc64@0.20.2':
@@ -7124,10 +7120,6 @@ snapshots:
 
   '@dual-bundle/import-meta-resolve@4.1.0': {}
 
-  '@dvcol/common-utils@1.17.0':
-    dependencies:
-      pretty-bytes: 6.1.1
-
   '@dvcol/common-utils@1.17.2':
     dependencies:
       pretty-bytes: 6.1.1
@@ -7198,9 +7190,9 @@ snapshots:
       - sugarss
       - terser
 
-  '@dvcol/web-extension-utils@3.4.3':
+  '@dvcol/web-extension-utils@3.4.4':
     dependencies:
-      '@dvcol/common-utils': 1.17.0
+      '@dvcol/common-utils': 1.17.2
       fast-glob: 3.3.2
       fs-extra: 11.2.0
       rxjs: 7.8.1
