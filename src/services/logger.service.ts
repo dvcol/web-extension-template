@@ -6,9 +6,12 @@ export class Logger {
   });
 
   static colorize = ProxyLogger.colorize;
-
   static get timestamp() {
     return ProxyLogger.timestamp();
+  }
+
+  static get trace() {
+    return this.logger.trace;
   }
 
   static get debug() {
@@ -27,3 +30,5 @@ export class Logger {
     return this.logger.error;
   }
 }
+
+export { LogLevel };
