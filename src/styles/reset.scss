@@ -31,6 +31,9 @@ body {
   min-height: 100svh;
   line-height: 1.5rem;
   -webkit-font-smoothing: antialiased;
+  transition-behavior: allow-discrete;
+  // stylelint-disable-next-line property-no-unknown -- @see https://caniuse.com/mdn-css_properties_interpolate-size_allow-keywords
+  interpolate-size: allow-keywords;
 }
 
 /* Improve media defaults */
