@@ -51,8 +51,8 @@
     "release:changelog": "extract-changelog-release > RELEASE.md"
   },
   "dependencies": {
-    "@dvcol/common-utils": "^1.17.1",
-    "@dvcol/web-extension-utils": "^3.4.3",
+    "@dvcol/common-utils": "^1.18.0",
+    "@dvcol/web-extension-utils": "^3.4.5",
     "@vue/devtools": "^7.4.6",
     "pinia": "^2.2.4",
     "vue": "^3.5.10",
