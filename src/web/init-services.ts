@@ -16,7 +16,7 @@ const onVersionUpdate = async (storageKey = MessageType.VersionUpdate) => {
   await storage.local.remove(storageKey);
 };
 
-export const initServices = async (options: { option?: boolean; popup?: boolean; web?: boolean } = {}) => {
+export const initServices = async (options: { option?: boolean; popup?: boolean; panel?: boolean; web?: boolean } = {}) => {
   await initLocalI18n().promise;
 
   Logger.info(...Logger.colorize(LoggerColor.Success, Logger.timestamp, 'All services initialized!'), options);

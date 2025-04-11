@@ -10,7 +10,7 @@ import { Logger } from '~/services/logger.service';
 import { RouterService } from '~/services/router.service';
 import { initServices } from '~/web/init-services';
 
-export type InitVueAppOption = RouterOptions & { view?: { option?: boolean; popup?: boolean; web?: boolean } };
+export type InitVueAppOption = RouterOptions & { view?: { option?: boolean; popup?: boolean; panel?: boolean; web?: boolean } };
 export const initVueApp = (component: Component, options: InitVueAppOption = {}) => {
   const app = createApp(component);
 

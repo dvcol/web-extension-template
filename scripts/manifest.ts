@@ -1,12 +1,31 @@
-import fs from 'fs-extra';
+import fs from "fs-extra";
 
-import pkg from '../package.json';
+import pkg from "../package.json";
 
-import { getDirName, isDev, port, resolveParent } from './utils';
+import { getDirName, isDev, port, resolveParent } from "./utils";
 
-import type { Manifest } from 'webextension-polyfill';
+import type { Manifest } from "webextension-polyfill";
 
-export const manifest: Manifest.WebExtensionManifest = {
+const Endpoints = {
+  Dev: `http://localhost` as const,
+} as const;
+
+const getExtensionPages = (_dev: boolean, _port: number) => {
+  if (_dev && _port) return `script-src 'self' ${Endpoints.Dev}:${_port}; object-src 'self' ${Endpoints.Dev}:${_port}`;
+  return "script-src 'self'; object-src 'self'";
+};
+
+const getHostPermissions = (_dev: boolean, _port: number) => {
+  const permissions: Manifest.Permission[] = [];
+  if (_dev) permissions.push(`${Endpoints.Dev}:${_port}/*`);
+  return permissions;
+};
+
+export type WebManifest = Manifest.WebExtensionManifest & {
+  side_panel: Record<string, string>;
+};
+
+export const manifest: WebManifest = {
   manifest_version: 3,
   name: pkg.title || pkg.name,
   version: pkg.version,
@@ -26,18 +45,19 @@ export const manifest: Manifest.WebExtensionManifest = {
     default_icon: 'icons/icon-512.png',
     default_popup: 'views/popup/index.html',
   },
+  side_panel: {
+    default_path: 'views/panel/index.html',
+  },
   background: {
     service_worker: 'scripts/background.js',
     type: 'module',
   },
-  permissions: ['storage', 'tabs', 'contextMenus'],
+  permissions: ['storage', 'tabs', 'contextMenus', 'sidePanel'],
   web_accessible_resources: [],
-  host_permissions: [],
+  host_permissions: getHostPermissions(isDev, port),
   content_security_policy: {
     // Adds localhost for vite hot reload
-    extension_pages: isDev
-      ? `script-src 'self' http://localhost:${port}; object-src 'self' http://localhost:${port}`
-      : "script-src 'self'; object-src 'self'",
+    extension_pages: getExtensionPages(isDev, port),
   },
 };
 
