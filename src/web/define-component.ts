@@ -2,7 +2,7 @@ export enum WebComponents {
   WebExtensionTemplate = 'wc-web-extension-template',
 }
 
-export type DefineOptions = { baseUrl?: string; view?: { option?: boolean; popup?: boolean; web?: boolean } };
+export type DefineOptions = { baseUrl?: string; view?: { option?: boolean; popup?: boolean; panel?: boolean; web?: boolean } };
 export type DefineComponent = (options?: DefineOptions, component?: WebComponents) => Promise<CustomElementConstructor>;
 
 export const defineComponent: DefineComponent = async (options = {}, component = WebComponents.WebExtensionTemplate) => {
