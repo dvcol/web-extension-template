@@ -51,7 +51,14 @@ export class I18nStore {
     return storeLocale;
   }
 
-  static i18n = (value: string | BrowserI18nInput, ...modules: string[]): string => {
+  static i18n = (
+    value: string | BrowserI18nInput,
+    ...modules: string[]
+  ): {
+    key: string;
+    substitution?: string[];
+    value: string;
+  } => {
     const path: string = Array.isArray(modules) ? modules.join('__') : modules;
 
     let key: string;
@@ -74,7 +81,18 @@ export class I18nStore {
       }
       return result;
     });
-    return reactiveI18n;
+
+    return {
+      get key() {
+        return key;
+      },
+      get substitution() {
+        return substitution;
+      },
+      get value() {
+        return reactiveI18n;
+      },
+    };
   };
 
   static addLocale = (_locale: Locale, _lang = this.lang, merge = false) => {

@@ -141,6 +141,7 @@ export default defineConfig(() => ({
   envDir: resolveParent('env'),
   resolve: {
     alias: {
+      src: fileURLToPath(new URL('./src', import.meta.url)),
       '~': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },

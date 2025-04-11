@@ -13,6 +13,8 @@
   import { Logger } from '~/services/logger.service';
   import { initServices } from '~/web/init-services';
 
+  import '~/styles/base.scss';
+
   const { baseUrl, view }: AppProps = $props();
 
   const HomeComponent = import('~/components/home/HomeComponent.svelte');
@@ -28,9 +30,7 @@
   </Suspense>
 </div>
 
-<style lang="scss" global>
-  @use 'src/styles/base.scss';
-
+<style lang="scss">
   .app-container {
     display: flex;
     flex-direction: column;

@@ -11,7 +11,7 @@ import { chromeI18n } from '~/utils/browser/browser.utils';
 export const useI18n = (...roots: string[]): ReturnType<typeof useI18nTranslate> => {
   if (!chromeI18n) {
     I18nStore.init(import.meta.env.VITE_BASE).catch(err => Logger.error('Failed to initialize i18n store', err));
-    return (value, ...modules) => I18nStore.i18n(value, ...(modules?.length ? modules : roots));
+    return (value, ...modules) => I18nStore.i18n(value, ...(modules?.length ? modules : roots)).value;
   }
 
   return useI18nTranslate(...roots);
