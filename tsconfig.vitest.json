@@ -1,8 +1,8 @@
 {
   "extends": "./tsconfig.vite.json",
-  "include": ["**/*.ts", "**/*.svelte"],
-  "exclude": [],
   "compilerOptions": {
     "types": ["node", "jsdom", "vitest/globals"]
-  }
+  },
+  "include": ["**/*.ts", "**/*.svelte"],
+  "exclude": []
 }

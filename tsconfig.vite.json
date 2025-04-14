@@ -1,5 +1,8 @@
 {
-  "extends": ["@tsconfig/node22/tsconfig.json", "./tsconfig.json"],
+  "extends": ["@tsconfig/node22/tsconfig.json", "./tsconfig.app.json"],
+  "compilerOptions": {
+    "types": ["chrome", "node", "vitest", "env.d.ts"]
+  },
   "include": [
     "vite.config.*",
     "vitest.setup.ts",
@@ -11,8 +14,5 @@
     "scripts/**/*",
     "scripts/**/*.ts",
     "package.json"
-  ],
-  "compilerOptions": {
-    "types": ["chrome", "node", "vitest"]
-  }
+  ]
 }

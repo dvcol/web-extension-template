@@ -3,13 +3,13 @@ import type { chrome } from 'chrome';
 
 import type { DefineComponent, WebComponents } from '~/web/define-component';
 
-export const baseUrl = 'web-extension-template' as const;
+export const baseUrl = 'web-extension-template';
 
-type WebExtensionTemplate = {
+interface WebExtensionTemplate {
   WebComponents: WebComponents;
   defineComponent: DefineComponent;
   default: DefineComponent;
-};
+}
 
 declare global {
   interface Window {
@@ -17,4 +17,4 @@ declare global {
   }
 }
 
-export type { WebExtensionTemplate, DefineComponent, WebComponents };
+export type { DefineComponent, WebComponents, WebExtensionTemplate };

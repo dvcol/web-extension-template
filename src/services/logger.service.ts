@@ -11,23 +11,23 @@ export class Logger {
   }
 
   static get trace() {
-    return this.logger.trace;
+    return this.logger.trace as Console['trace'];
   }
 
   static get debug() {
-    return this.logger.debug;
+    return this.logger.debug as Console['debug'];
   }
 
   static get info() {
-    return this.logger.info;
+    return this.logger.info as Console['info'];
   }
 
   static get warn() {
-    return this.logger.warn;
+    return this.logger.warn as Console['warn'];
   }
 
   static get error() {
-    return this.logger.error;
+    return this.logger.error as Console['error'];
   }
 }
 

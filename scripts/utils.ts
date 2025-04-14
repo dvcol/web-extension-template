@@ -1,13 +1,13 @@
-import { dirname, resolve } from 'path';
+import { dirname, resolve } from 'node:path';
 
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 
-export const enum environment {
-  dev = 'development',
-  prod = 'production',
-}
+export const environment = Object.freeze({
+  dev: 'development' as const,
+  prod: 'production' as const,
+});
 
 export const getDirName = () => dirname(fileURLToPath(import.meta.url));
 export const isDev = process.env.NODE_ENV === environment.dev;
-export const port = parseInt(process.env.PORT || '', 10) || 3303;
+export const port = Number.parseInt(process.env.PORT ?? '', 10) || 3303;
 export const resolveParent = (...args: string[]) => resolve(getDirName(), '..', ...args);

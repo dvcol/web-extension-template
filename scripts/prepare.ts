@@ -1,4 +1,4 @@
-import { exec } from 'child_process';
+import { exec } from 'node:child_process';
 
 import { mergeJson } from '@dvcol/web-extension-utils/node/file';
 import { watch } from 'chokidar';
@@ -11,7 +11,7 @@ import { getDirName, isDev, resolveParent } from './utils';
  * Replace index.html with link to vite localhost for hot reload
  * @param view the view to replace
  */
-const copyIndexHtml = async (view: string) => {
+async function copyIndexHtml(view: string) {
   fs.ensureDirSync(resolveParent(`dist/views/${view}`));
   const data = fs.readFileSync(resolveParent(`src/views/${view}/index.html`), 'utf-8').replace(
     '<script type="module" src="./main.ts"></script>',
@@ -20,7 +20,7 @@ const copyIndexHtml = async (view: string) => {
   );
   fs.writeFileSync(resolveParent(`dist/views/${view}/index.html`), data, 'utf-8');
   console.info(`Stubbing '${view}' to '${getDirName()}/dist/views/${view}/index.html'`);
-};
+}
 
 /**
  * copy index.html to use Vite in development
@@ -30,10 +30,10 @@ const copyViews = async (views = ['options', 'popup', 'panel']) => views.map(cop
 /**
  * Copy extension icons to dist folder
  */
-const copyIcons = async (_isDev: boolean) => {
+async function copyIcons(_isDev: boolean) {
   if (_isDev) return fs.symlink(resolveParent('icons'), resolveParent('dist/icons'), 'junction');
   return fs.copySync('icons', 'dist/icons', { overwrite: true });
-};
+}
 
 /**
  * Copy extension icons to dist folder
@@ -43,7 +43,7 @@ const copyAssets = async () => fs.symlink(resolveParent('src/assets'), resolvePa
 /**
  * Prepare dist folder with manifest.json and views
  */
-const prepare = async (hmr = isDev) => {
+async function prepare(hmr = isDev) {
   writeManifest().catch(e => console.error('Failed to write manifest.json', e));
 
   copyIcons(isDev).catch(e => console.error('Failed to copy extension icons', e));
@@ -83,6 +83,6 @@ const prepare = async (hmr = isDev) => {
 
     copyAssets().catch(e => console.error('Failed to write assets', e));
   }
-};
+}
 
 prepare().catch(e => console.error('Failed to prepare dist folder', e));

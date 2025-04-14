@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { type Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
 
   export type SuspenseProps<R = any, E = any> = {
     promise: Promise<R>;

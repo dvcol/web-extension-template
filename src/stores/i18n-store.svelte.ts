@@ -7,7 +7,7 @@ let storeLang = $state<string>('en');
 let storeLocales = $state<Locales>({});
 let storeReady = false;
 
-const storeLocale = $derived(storeLocales[storeLang]);
+const storeLocale: Locale | undefined = $derived(storeLocales[storeLang]);
 
 export class I18nStore {
   static baseUri?: string;
@@ -25,7 +25,7 @@ export class I18nStore {
     } else if (!I18nStore.locale) {
       try {
         const response = await fetch(new URL(`${this.baseUri}_locales/en/messages.json`, new URL(import.meta.url).origin));
-        const locale = await response.json();
+        const locale = await response.json() as Locale;
         I18nStore.addLocale(locale, 'en');
         storeReady = true;
       } catch (err) {
@@ -72,7 +72,7 @@ export class I18nStore {
 
     // @see https://github.com/sveltejs/svelte/issues/12286#issuecomment-2207523621
     const reactiveI18n = $derived.by(() => {
-      let result: string = storeLocale?.[key]?.message || key;
+      let result: string = storeLocale?.[key]?.message ?? key;
 
       if (substitution?.length) {
         for (let i = 0; i < substitution.length; i += 1) {

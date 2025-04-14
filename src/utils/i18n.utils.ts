@@ -8,16 +8,16 @@ import { chromeI18n } from '~/utils/browser/browser.utils';
  * @param roots modules names
  * @see chrome.i18n.getMessage
  */
-export const useI18n = (...roots: string[]): ReturnType<typeof useI18nTranslate> => {
+export function useI18n(...roots: string[]): ReturnType<typeof useI18nTranslate> {
   if (!chromeI18n) {
     I18nStore.init(import.meta.env.VITE_BASE).catch(err => Logger.error('Failed to initialize i18n store', err));
     return (value, ...modules) => I18nStore.i18n(value, ...(modules?.length ? modules : roots)).value;
   }
 
   return useI18nTranslate(...roots);
-};
+}
 
-export const waitI18nReady = async (): Promise<boolean> => {
+export async function waitI18nReady(): Promise<boolean> {
   if (!chromeI18n) return I18nStore.init(import.meta.env.VITE_BASE);
   return Promise.resolve(true);
-};
+}

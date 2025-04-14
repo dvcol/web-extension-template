@@ -20,12 +20,12 @@ export const routes: Readonly<Route<RouteNames>[]> = [
   {
     name: RouteName.Hello,
     path: `/${RouteName.Hello}`,
-    component: () => import('~/components/hello/HelloComponent.svelte'),
+    component: async () => import('~/components/hello/HelloComponent.svelte'),
   },
   {
     name: RouteName.Goodbye,
     path: `/${RouteName.Goodbye}`,
-    component: () => import('~/components/goodbye/GoodbyeComponent.svelte'),
+    component: async () => import('~/components/goodbye/GoodbyeComponent.svelte'),
   },
   {
     name: RouteName.Any,
