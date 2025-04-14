@@ -1,6 +1,7 @@
-import antfu from '@antfu/eslint-config';
+import defineConfig from '@antfu/eslint-config';
+import prettierOptions from './.prettierrc.js';
 
-export default antfu({
+export default defineConfig({
   typescript: {
     tsconfigPath: 'tsconfig.json',
   },
@@ -41,5 +42,12 @@ export default antfu({
         },
       ],
     },
+  },
+  formatters: {
+    html: 'prettier',
+    markdown: 'prettier',
+    svg: 'prettier',
+    xml: 'prettier',
+    prettierOptions,
   },
 });
