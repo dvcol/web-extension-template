@@ -3,7 +3,6 @@ import type { Manifest } from 'webextension-polyfill';
 import fs from 'fs-extra';
 
 import pkg from '../package.json';
-
 import { getDirName, isDev, port, resolveParent } from './utils';
 
 const Endpoints = {

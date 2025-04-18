@@ -34,7 +34,7 @@
     "vite:build": "vite build",
     "vite:watch": "vite build --watch",
     "vite:preview": "vite preview",
-    "svelte:check": "svelte-check --tsconfig ./tsconfig.json --compiler-warnings \"css-unused-selector:ignore\"",
+    "svelte:check": "svelte-check --tsconfig ./tsconfig.app.json --compiler-warnings \"css-unused-selector:ignore\"",
     "svelte:watch": "pnpm run svelte:check --watch",
     "dev": "cross-env NODE_ENV=development run-p dist vite:serve",
     "dev:web": "VITE_SOURCEMAP=true VITE_WEB=true VITE_BASE=/web-extension-template/ run-s dev",
@@ -46,21 +46,21 @@
     "test:watch": "vitest --mode testing",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "style": "stylelint **/*.{svelte,css,scss,less,html} --go '{\"gitignore\":true}'",
+    "style": "stylelint '**/*.{svelte,css,scss,less,html}' --go '{\"gitignore\":true}'",
     "style:fix": "pnpm run style --fix",
     "release": "standard-version",
     "release:changelog": "extract-changelog-release > RELEASE.md"
   },
   "dependencies": {
-    "@dvcol/common-utils": "^1.29.1",
+    "@dvcol/common-utils": "^1.29.4",
     "@dvcol/svelte-simple-router": "^1.11.2",
     "@dvcol/web-extension-utils": "^3.5.3",
     "svelte": "^5.26.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.12.0",
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
+    "@dvcol/eslint-config": "^1.3.0",
     "@dvcol/stylelint-plugin-presets": "^2.1.2",
     "@prettier/plugin-xml": "^3.4.1",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",

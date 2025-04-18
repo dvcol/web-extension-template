@@ -1,13 +1,14 @@
 import type { InputOption } from 'rollup';
 import type { PluginOption } from 'vite';
+
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
+
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { sveltePreprocess } from 'svelte-preprocess';
 import { defineConfig, loadEnv } from 'vite';
 import { checker } from 'vite-plugin-checker';
-
 import dtsPlugin from 'vite-plugin-dts';
 import { VitePWA } from 'vite-plugin-pwa';
 
@@ -43,7 +44,7 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
     }),
     checker({
       typescript: {
-        tsconfigPath: 'tsconfig.json',
+        tsconfigPath: 'tsconfig.app.json',
       },
     }),
     {
@@ -133,9 +134,9 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
 }
 
 export default defineConfig(({ mode }) => {
-  const env = { ...process.env, ...loadEnv(mode, process.cwd()) };
-  const isWeb = !!env.VITE_WEB;
-  const sourcemap = !!env.VITE_SOURCEMAP;
+  const env: NodeJS.Process['env'] = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  const isWeb: boolean = env.VITE_WEB ?? false;
+  const sourcemap: boolean = env.VITE_SOURCEMAP ?? false;
   return {
     root: resolveParent('src'),
     envDir: resolveParent('env'),
@@ -170,7 +171,7 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: resolveParent('dist'),
-      sourcemap: isDev || sourcemap ? 'inline' : false,
+      sourcemap: (isDev || sourcemap) ? 'inline' : false,
       minify: false,
       rollupOptions: {
         preserveEntrySignatures: 'allow-extension',

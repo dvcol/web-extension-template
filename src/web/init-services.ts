@@ -1,5 +1,7 @@
 import type { MessagePayload } from '~/models/message.model';
+
 import { LoggerColor } from '@dvcol/common-utils/common/logger';
+
 import { MessageType } from '~/models/message.model';
 import { Logger } from '~/services/logger.service';
 import { storage } from '~/utils/browser/browser-storage.utils';

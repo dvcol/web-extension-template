@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import type { Component, Snippet } from 'svelte';
+
   import type { SuspenseProps } from '~/components/utils/Suspense.svelte';
 
   export type LazyComponentProps = {

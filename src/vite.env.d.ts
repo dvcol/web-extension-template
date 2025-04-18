@@ -8,8 +8,8 @@ interface ImportMetaEnv extends ImportMetaEnv {
   PROD: boolean;
   SSR: boolean;
 
-  PKG_VERSION: string;
-  PKG_NAME: string;
+  PKG_VERSION?: string;
+  PKG_NAME?: string;
 
   VITE_BASE?: string;
   VITE_WEB?: boolean;
