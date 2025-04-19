@@ -1,25 +1,24 @@
-import fs from "fs-extra";
+import type { Manifest } from 'webextension-polyfill';
 
-import pkg from "../package.json";
+import fs from 'fs-extra';
 
-import { getDirName, isDev, port, resolveParent } from "./utils";
-
-import type { Manifest } from "webextension-polyfill";
+import pkg from '../package.json';
+import { getDirName, isDev, port, resolveParent } from './utils';
 
 const Endpoints = {
-  Dev: `http://localhost` as const,
+  Dev: 'http://localhost' as const,
 } as const;
 
-const getExtensionPages = (_dev: boolean, _port: number) => {
+function getExtensionPages(_dev: boolean, _port: number) {
   if (_dev && _port) return `script-src 'self' ${Endpoints.Dev}:${_port}; object-src 'self' ${Endpoints.Dev}:${_port}`;
   return "script-src 'self'; object-src 'self'";
-};
+}
 
-const getHostPermissions = (_dev: boolean, _port: number) => {
+function getHostPermissions(_dev: boolean, _port: number) {
   const permissions: Manifest.Permission[] = [];
   if (_dev) permissions.push(`${Endpoints.Dev}:${_port}/*`);
   return permissions;
-};
+}
 
 export type WebManifest = Manifest.WebExtensionManifest & {
   side_panel: Record<string, string>;

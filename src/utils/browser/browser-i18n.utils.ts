@@ -1,4 +1,7 @@
-export type BrowserI18nInput = { key: string; substitutions: string[] };
+export interface BrowserI18nInput {
+  key: string;
+  substitutions: string[];
+}
 
 /**
  * Convert translation using chrome i18n
@@ -7,7 +10,7 @@ export type BrowserI18nInput = { key: string; substitutions: string[] };
  * @see chrome.i18n.getMessage
  * @see [chrome.i18n](https://developer.chrome.com/docs/extensions/reference/i18n/)
  */
-export const i18nTranslate = (value: string | BrowserI18nInput, ...modules: string[]): string => {
+export function i18nTranslate(value: string | BrowserI18nInput, ...modules: string[]): string {
   const path: string = Array.isArray(modules) ? modules.join('__') : modules;
 
   let key: string;
@@ -19,14 +22,14 @@ export const i18nTranslate = (value: string | BrowserI18nInput, ...modules: stri
     substitution = value?.substitutions;
   }
   return globalThis?.chrome?.i18n.getMessage?.(key, substitution) || key;
-};
+}
 
 /**
  * Setup i18n function with modules names
  * @param roots modules names
  * @see chrome.i18n.getMessage
  */
-export const useI18nTranslate =
-  (...roots: string[]): typeof i18nTranslate =>
-  (value, ...modules): string =>
+export function useI18nTranslate(...roots: string[]): typeof i18nTranslate {
+  return (value, ...modules): string =>
     i18nTranslate(value, ...(modules?.length ? modules : roots));
+}

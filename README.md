@@ -1,4 +1,3 @@
-
 <h1 align="center">Welcome to <i>Web Extension Template</i></h1>
 <p>
   <img src="https://img.shields.io/badge/pnpm-%3E%3D7.0.0-blue.svg" />
@@ -18,6 +17,7 @@
 </p>
 
 > <Web Extension Template> description here
+
 ## Prerequisites
 
 - pnpm >=9.0.0
@@ -45,7 +45,7 @@ pnpm test:unit
 
 ## Author
 
-* Github: [@dvcol](https://github.com/dvcol)
+- Github: [@dvcol](https://github.com/dvcol)
 
 ## 🤝 Contributing
 
@@ -63,5 +63,6 @@ Give a ⭐️ if this project helped you!
 
 This project is [MIT](https://github.com/dvcol/web-extension-template/blob/master/LICENSE) licensed.
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

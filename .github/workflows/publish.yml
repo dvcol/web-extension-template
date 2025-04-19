@@ -16,7 +16,6 @@ on:
         required: false
         type: boolean
 
-
 jobs:
   publish-npm:
     name: ☁️ Publish npm
@@ -42,7 +41,6 @@ jobs:
           # =================  ☁️ Publish to npm =================
           pnpm publish
 
-
   publish-store:
     name: 🚀 Publish extension
     runs-on: ubuntu-latest
@@ -58,7 +56,7 @@ jobs:
       - name: 🚧 Build
         uses: ./.github/actions/build
         with:
-          script: 'build'
+          script: build
 
       - name: 🗃️ Zip build folder
         run: |
@@ -107,4 +105,3 @@ jobs:
 
           # Uploading zip to web store
           npx -s chrome-webstore-upload-cli upload --source dist/web-extension-template.zip --extension-id "$CHROME_WEB_STORE_EXTENSION_ID" --client-id "$CHROME_WEB_STORE_CLIENT_ID" --client-secret "$CHROME_WEB_STORE_CLIENT_SECRET" --refresh-token "$CHROME_WEB_STORE_REFRESH_TOKEN"
-  

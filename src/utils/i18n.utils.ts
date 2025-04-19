@@ -33,11 +33,11 @@ export const initLocalI18n = (baseUrl = RouterService.baseUrl) => {
  * @param roots modules names
  * @see chrome.i18n.getMessage
  */
-export const useI18n = (...roots: string[]): ReturnType<typeof useI18nTranslate> => {
+export function useI18n(...roots: string[]): ReturnType<typeof useI18nTranslate> {
   if (!chromeI18n) {
     const { store } = initLocalI18n();
     return (value, ...modules) => store.i18n(value, ...(modules?.length ? modules : roots));
   }
 
   return useI18nTranslate(...roots);
-};
+}

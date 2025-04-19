@@ -1,6 +1,5 @@
-import { readdir, readFile, writeFile } from 'fs/promises';
-import { dirname, join, relative } from 'path';
-import { fileURLToPath, URL } from 'url';
+import type { InputOption } from 'rollup';
+import type { PluginOption } from 'vite';
 
 import vue from '@vitejs/plugin-vue';
 
@@ -12,13 +11,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import pkg from './package.json';
 import { isDev, port, resolveParent } from './scripts/utils';
 
-import type { InputOption } from 'rollup';
-import type { PluginOption } from 'vite';
-
-const isWeb = !!process.env.VITE_WEB;
-const sourcemap = !!process.env.VITE_SOURCEMAP;
-
-const getInput = (hmr: boolean, _isWeb: boolean): InputOption => {
+function getInput(hmr: boolean, _isWeb: boolean): InputOption {
   if (hmr) return { background: resolveParent('src/scripts/background/index.ts') };
 
   const inputs: Record<string, string> = {
@@ -34,11 +27,12 @@ const getInput = (hmr: boolean, _isWeb: boolean): InputOption => {
     inputs.entry = resolveParent('src/web/define-component.ts');
   }
   return inputs;
-};
+}
 
 const i18nRegex = /.*src\/i18n\/([a-zA-Z]+)\/.*\.json/;
 
-const getPlugins = (_isDev: boolean, _isWeb: boolean): PluginOption[] => {
+type JsonLocale = Record<string, string>;
+function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
   const plugins: PluginOption[] = [
     vue({
       features: {
@@ -52,12 +46,12 @@ const getPlugins = (_isDev: boolean, _isWeb: boolean): PluginOption[] => {
     }),
     {
       name: 'i18n-hmr',
-      configureServer: server => {
+      configureServer: (server) => {
         console.info('server start');
         server.ws.on('fetch:i18n', async () => {
           const dir = await readdir('dist/_locales');
-          const locales = dir.map(_lang =>
-            readFile(`dist/_locales/${_lang}/messages.json`, { encoding: 'utf-8' }).then(locale => ({ lang: _lang, locale: JSON.parse(locale) })),
+          const locales = dir.map(async _lang =>
+            readFile(`dist/_locales/${_lang}/messages.json`, { encoding: 'utf-8' }).then(locale => ({ lang: _lang, locale: JSON.parse(locale) as JsonLocale })),
           );
           server.ws.send({
             type: 'custom',
@@ -68,15 +62,14 @@ const getPlugins = (_isDev: boolean, _isWeb: boolean): PluginOption[] => {
       },
       handleHotUpdate: async ({ server, file, read, modules }) => {
         const lang = file.match(i18nRegex)?.[1];
-        if (lang) {
-          console.info('Emit new i18n', file);
-          const locale = JSON.parse(await read());
-          server.ws.send({
-            type: 'custom',
-            event: 'update:i18n',
-            data: [{ lang, locale }],
-          });
-        }
+        if (typeof lang !== 'string') return modules;
+        console.info('Emit new i18n', file);
+        const locale = JSON.parse(await read()) as JsonLocale;
+        server.ws.send({
+          type: 'custom',
+          event: 'update:i18n',
+          data: [{ lang, locale }],
+        });
         return modules;
       },
     },
@@ -135,7 +128,7 @@ const getPlugins = (_isDev: boolean, _isWeb: boolean): PluginOption[] => {
   }
 
   return plugins;
-};
+}
 
 export default defineConfig(() => ({
   root: resolveParent('src'),
@@ -144,22 +137,12 @@ export default defineConfig(() => ({
     alias: {
       '~': fileURLToPath(new URL('./src', import.meta.url)),
     },
-  },
-  define: {
-    __DEV__: isDev,
-    __VUE_OPTIONS_API__: false,
-    __VUE_PROD_DEVTOOLS__: isDev,
-    'import.meta.env.PKG_VERSION': JSON.stringify(pkg.version),
-    'import.meta.env.PKG_NAME': JSON.stringify(pkg.name),
-  },
-  plugins: getPlugins(isDev, isWeb),
-  base: process.env.VITE_BASE || './',
-  server: {
-    port,
-    open: true,
-    host: true,
-    hmr: {
-      host: 'localhost',
+    define: {
+      '__DEV__': isDev,
+      '__VUE_OPTIONS_API__': false,
+      '__VUE_PROD_DEVTOOLS__': isDev,
+      'import.meta.env.PKG_VERSION': JSON.stringify(pkg.version),
+      'import.meta.env.PKG_NAME': JSON.stringify(pkg.name),
     },
   },
   preview: {
@@ -183,23 +166,18 @@ export default defineConfig(() => ({
           if (entry.name === 'lib') return 'lib/index.js';
           return 'scripts/[name]-[hash].js';
         },
-        assetFileNames: asset => {
-          const format = '[name][extname]';
-          if (asset.name?.endsWith('css')) return `styles/${format}`;
-          return `assets/[name][extname]`;
-        },
       },
     },
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    coverage: {
-      reportsDirectory: './coverage',
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      coverage: {
+        reportsDirectory: './coverage',
+      },
+      setupFiles: ['./vitest.setup.ts'],
     },
-    setupFiles: ['./vitest.setup.ts'],
-  },
-  optimizeDeps: {
-    exclude: ['path', 'fast-glob'],
-  },
-}));
+    optimizeDeps: {
+      exclude: ['path', 'fast-glob'],
+    },
+  };
+});
