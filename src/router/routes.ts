@@ -1,4 +1,4 @@
-import type { RouteRecordRaw } from 'vue-router';
+import type { RouteComponent, RouteRecordRaw } from 'vue-router';
 
 export enum Route {
   Home = 'home',
@@ -8,18 +8,18 @@ export enum Route {
 
 export const routes: RouteRecordRaw[] = [
   {
-    path: `/`,
+    path: '/',
     name: Route.Home,
     redirect: { name: 'hello' },
   },
   {
     path: `/${Route.Hello}`,
     name: Route.Hello,
-    component: () => import('~/components/views/hello/HelloComponent.vue'),
+    component: async () => import('~/components/views/hello/HelloComponent.vue') as Promise<RouteComponent>,
   },
   {
     path: `/${Route.Goodbye}`,
     name: Route.Goodbye,
-    component: () => import('~/components/views/goodbye/GoodbyeComponent.vue'),
+    component: async () => import('~/components/views/goodbye/GoodbyeComponent.vue') as Promise<RouteComponent>,
   },
 ];

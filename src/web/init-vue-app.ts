@@ -1,17 +1,16 @@
-import { createPinia } from 'pinia';
-
-import { createApp, getCurrentInstance } from 'vue';
-
 import type { App, Component } from 'vue';
 
 import type { RouterOptions } from '~/router';
+
+import { createPinia } from 'pinia';
+import { createApp, getCurrentInstance } from 'vue';
 
 import { Logger } from '~/services/logger.service';
 import { RouterService } from '~/services/router.service';
 import { initServices } from '~/web/init-services';
 
 export type InitVueAppOption = RouterOptions & { view?: { option?: boolean; popup?: boolean; panel?: boolean; web?: boolean } };
-export const initVueApp = (component: Component, options: InitVueAppOption = {}) => {
+export function initVueApp(component: Component, options: InitVueAppOption = {}) {
   const app = createApp(component);
 
   // check if an instance already exist, if not, create one
@@ -26,12 +25,12 @@ export const initVueApp = (component: Component, options: InitVueAppOption = {})
   initServices(options.view).catch(error => Logger.error('Failed to initialized services.', error));
 
   return app;
-};
+}
 
-export const mountVueApp = (id = '#app', component: Component, options?: InitVueAppOption): App => {
+export function mountVueApp(id = '#app', component: Component, options?: InitVueAppOption): App {
   const app = initVueApp(component, options);
 
   app.mount(id);
 
   return app;
-};
+}

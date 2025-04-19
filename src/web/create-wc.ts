@@ -1,8 +1,9 @@
-import { defineCustomElement, getCurrentInstance, h } from 'vue';
-
 import type { DevToolsHook, DevToolsHooks } from '@vue/devtools';
 import type { Component, ComponentInternalInstance } from 'vue';
+
 import type { InitVueAppOption } from '~/web/init-vue-app';
+
+import { defineCustomElement, getCurrentInstance, h } from 'vue';
 
 import { Logger } from '~/services/logger.service';
 import { initVueApp } from '~/web/init-vue-app';
@@ -15,7 +16,7 @@ declare global {
   }
 }
 
-export const createElementInstance = (component: Component, { name, ...options }: InitVueAppOption & { name: string }) => {
+export function createElementInstance(component: Component, { name, ...options }: InitVueAppOption & { name: string }) {
   return defineCustomElement({
     setup(props) {
       const app = initVueApp(component, options);
@@ -47,4 +48,4 @@ export const createElementInstance = (component: Component, { name, ...options }
       return () => h(component, props);
     },
   });
-};
+}

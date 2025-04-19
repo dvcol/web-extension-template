@@ -1,4 +1,5 @@
 import type { Router } from 'vue-router';
+
 import type { RouterOptions } from '~/router';
 
 import { createRouter } from '~/router';

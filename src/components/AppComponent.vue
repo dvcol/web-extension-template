@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Transition } from 'vue';
 import { RouterView } from 'vue-router';
 
 import PageLoading from '~/components/common/loading/PageLoading.vue';
@@ -8,7 +7,7 @@ import PageLoading from '~/components/common/loading/PageLoading.vue';
 <template>
   <RouterView v-slot="{ Component }">
     <header>
-      <nav></nav>
+      <nav />
     </header>
     <main>
       <Transition name="scale" mode="out-in">
@@ -17,7 +16,7 @@ import PageLoading from '~/components/common/loading/PageLoading.vue';
         </KeepAlive>
       </Transition>
     </main>
-    <footer></footer>
+    <footer />
   </RouterView>
 </template>
 

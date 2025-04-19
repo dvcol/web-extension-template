@@ -10,7 +10,9 @@ const i18n = useI18n('hello');
 <template>
   <div class="text">
     <span class="title">{{ i18n('app_name', 'global') }}</span>
-    <RouterLink :to="Route.Goodbye">{{ i18n('title') }}</RouterLink>
+    <RouterLink :to="Route.Goodbye">
+      {{ i18n('title') }}
+    </RouterLink>
   </div>
 </template>
 

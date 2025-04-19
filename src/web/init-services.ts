@@ -2,8 +2,6 @@ import type { MessagePayload } from '~/models/message.model';
 
 import { LoggerColor } from '@dvcol/common-utils/common/logger';
 
-import type { MessagePayload } from '~/models/message.model';
-
 import { MessageType } from '~/models/message.model';
 import { Logger } from '~/services/logger.service';
 import { storage } from '~/utils/browser/browser-storage.utils';
@@ -18,7 +16,7 @@ async function onVersionUpdate(storageKey = MessageType.VersionUpdate) {
   await storage.local.remove(storageKey);
 }
 
-export const initServices = async (options: { option?: boolean; popup?: boolean; panel?: boolean; web?: boolean } = {}) => {
+export async function initServices(options: { option?: boolean; popup?: boolean; panel?: boolean; web?: boolean } = {}) {
   await initLocalI18n().promise;
 
   Logger.info(...Logger.colorize(LoggerColor.Success, Logger.timestamp, 'All services initialized!'), options);
