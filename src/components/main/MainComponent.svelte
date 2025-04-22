@@ -1,16 +1,15 @@
 <script lang="ts">
-  import { RouterContext, RouterView } from '@dvcol/svelte-simple-router/components';
-  import { link } from '@dvcol/svelte-simple-router/router';
+  import { RouterView } from '@dvcol/svelte-simple-router/components';
   import { transition } from '@dvcol/svelte-simple-router/utils';
 
   import svelteLogo from '~/assets/logo.svg';
-  import { options, RouteName } from '~/router/routes';
+  import { router } from '~/router/router';
   import { useI18n } from '~/utils/i18n.utils';
 
   const i18n = useI18n('home');
 </script>
 
-<main class="home-container">
+<main>
   <div>
     <a href="https://svelte.dev" target="_blank" rel="noreferrer">
       <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
@@ -18,14 +17,9 @@
   </div>
   <h1>{i18n('title')}</h1>
 
-  <RouterContext {options}>
-    <a href={null} use:link={{ path: `/${RouteName.Hello}` }}>{RouteName.Hello}</a>
-    <a href={`/${RouteName.Goodbye}`} use:link>{RouteName.Goodbye}</a>
-
-    <div class="view">
-      <RouterView {transition} />
-    </div>
-  </RouterContext>
+  <div class="view">
+    <RouterView {router} {transition} />
+  </div>
 
   <p>
     Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework
@@ -36,8 +30,9 @@
 </main>
 
 <style lang="scss">
-  .home-container {
+  main {
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -53,7 +48,7 @@
   }
 
   .view {
-    min-height: 10rem;
+    min-height: 6rem;
     padding: 2rem;
   }
 

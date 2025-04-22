@@ -11,9 +11,15 @@ importers:
       '@dvcol/common-utils':
         specifier: ^1.29.4
         version: 1.29.4
+      '@dvcol/neo-svelte':
+        specifier: ^1.1.2
+        version: 1.1.2(svelte@5.26.1)
       '@dvcol/svelte-simple-router':
-        specifier: ^1.11.2
-        version: 1.11.2(svelte@5.26.1)
+        specifier: ^2.0.1
+        version: 2.0.1(svelte@5.26.1)
+      '@dvcol/svelte-utils':
+        specifier: ^1.17.1
+        version: 1.17.1(svelte@5.26.1)
       '@dvcol/web-extension-utils':
         specifier: ^3.5.3
         version: 3.5.3
@@ -28,8 +34,8 @@ importers:
         specifier: ^19.8.0
         version: 19.8.0
       '@dvcol/eslint-config':
-        specifier: ^1.5.0
-        version: 1.5.0(@prettier/plugin-xml@3.4.1(prettier@3.5.3))(@typescript-eslint/utils@8.30.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.5.4))(@vue/compiler-sfc@3.5.13)(eslint-plugin-format@1.0.1(eslint@9.24.0(jiti@2.4.2)))(eslint-plugin-svelte@3.5.1(eslint@9.24.0(jiti@2.4.2))(svelte@5.26.1))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3)(svelte-eslint-parser@1.1.2(svelte@5.26.1))(typescript@5.5.4)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(jiti@2.4.2)(jsdom@26.0.0)(sass@1.86.3)(sugarss@2.0.0)(terser@5.31.6)(tsx@4.19.3)(yaml@2.7.1))
+        specifier: ^1.6.0
+        version: 1.6.0(@prettier/plugin-xml@3.4.1(prettier@3.5.3))(@typescript-eslint/utils@8.30.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.5.4))(@vue/compiler-sfc@3.5.13)(eslint-plugin-format@1.0.1(eslint@9.24.0(jiti@2.4.2)))(eslint-plugin-svelte@3.5.1(eslint@9.24.0(jiti@2.4.2))(svelte@5.26.1))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3)(svelte-eslint-parser@1.1.2(svelte@5.26.1))(typescript@5.5.4)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(jiti@2.4.2)(jsdom@26.0.0)(sass@1.86.3)(sugarss@2.0.0)(terser@5.31.6)(tsx@4.19.3)(yaml@2.7.1))
       '@dvcol/stylelint-plugin-presets':
         specifier: ^2.1.2
         version: 2.1.2(postcss-html@0.36.0(postcss-syntax@0.36.2)(postcss@8.5.3))(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(prettier@3.5.3)(stylelint@16.18.0(typescript@5.5.4))
@@ -1003,8 +1009,8 @@ packages:
     resolution: {integrity: sha512-QwfA1xm+UbtyMrPEpPa1o2IA7yJcOAlGLD2Ulthk48pHTBbLUDd+ZwxMhhRf0g8z1fNjag3a6nWQsBRFK5M7NA==}
     engines: {node: '>=20', pnpm: '>= 8'}
 
-  '@dvcol/eslint-config@1.5.0':
-    resolution: {integrity: sha512-w49E5I80dgunpC4Y36JjW4cokWXGQAM+W5EsvRS2Spd7HEutxkZGR+Aj9N0bYzExWuTQC5kjofgKq1hhInDjdA==}
+  '@dvcol/eslint-config@1.6.0':
+    resolution: {integrity: sha512-wVoItWZ2RKmE7QoIhJCQJ3XDYaZzcyvztnU1IlOL0yUja0tKZ6Sy5a+1zUw/kQ1J1NEFxwTEXBGhRmkdbaekIw==}
     engines: {node: '>=20', pnpm: '>= 8'}
     peerDependencies:
       '@prettier/plugin-xml': '>= 3.4.0'
@@ -1018,6 +1024,12 @@ packages:
         optional: true
       eslint-plugin-vuejs-accessibility:
         optional: true
+
+  '@dvcol/neo-svelte@1.1.2':
+    resolution: {integrity: sha512-0yoOXnM+XpwpNJl4lvfkh5U/H725dHJfC4PCRUEcn+5zVjP4Ulw93lxR4Bf9efm7ZExjaQOaLDLG0gXDQ1g1Pg==}
+    engines: {node: '>=20', pnpm: '>= 8'}
+    peerDependencies:
+      svelte: '>=5'
 
   '@dvcol/stylelint-plugin-presets@2.1.2':
     resolution: {integrity: sha512-18TGAY/71+6+hwQK5Gw9mYrpppKhufnLbt+XOsLs33XZ8oeBJ00X8Co7a86HJsXJiWIRORhLC4LsqE6cXcNpSQ==}
@@ -1039,8 +1051,8 @@ packages:
       postcss-scss:
         optional: true
 
-  '@dvcol/svelte-simple-router@1.11.2':
-    resolution: {integrity: sha512-zWLnaWVBtxIR7X0Zf2HANs/KxnTa8NG29uDGQye4pdkU1RsI+e2DlVhxGrn074IYTDTyGOrhznQvW5oOml2NrQ==}
+  '@dvcol/svelte-simple-router@2.0.1':
+    resolution: {integrity: sha512-YIZpCJcHzAO9wjSrzfJGjXxzrHzGYoHXBaA+UZpZBBTdFttql6MVavu9ykAVZfPbmyvt/hpWfqiKYFtXerEYow==}
     engines: {node: '>=20', pnpm: '>= 8'}
     peerDependencies:
       svelte: '>=5'
@@ -7696,7 +7708,7 @@ snapshots:
       pretty-bytes: 6.1.1
       uuid: 11.1.0
 
-  '@dvcol/eslint-config@1.5.0(@prettier/plugin-xml@3.4.1(prettier@3.5.3))(@typescript-eslint/utils@8.30.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.5.4))(@vue/compiler-sfc@3.5.13)(eslint-plugin-format@1.0.1(eslint@9.24.0(jiti@2.4.2)))(eslint-plugin-svelte@3.5.1(eslint@9.24.0(jiti@2.4.2))(svelte@5.26.1))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3)(svelte-eslint-parser@1.1.2(svelte@5.26.1))(typescript@5.5.4)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(jiti@2.4.2)(jsdom@26.0.0)(sass@1.86.3)(sugarss@2.0.0)(terser@5.31.6)(tsx@4.19.3)(yaml@2.7.1))':
+  '@dvcol/eslint-config@1.6.0(@prettier/plugin-xml@3.4.1(prettier@3.5.3))(@typescript-eslint/utils@8.30.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.5.4))(@vue/compiler-sfc@3.5.13)(eslint-plugin-format@1.0.1(eslint@9.24.0(jiti@2.4.2)))(eslint-plugin-svelte@3.5.1(eslint@9.24.0(jiti@2.4.2))(svelte@5.26.1))(eslint@9.24.0(jiti@2.4.2))(prettier@3.5.3)(svelte-eslint-parser@1.1.2(svelte@5.26.1))(typescript@5.5.4)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(jiti@2.4.2)(jsdom@26.0.0)(sass@1.86.3)(sugarss@2.0.0)(terser@5.31.6)(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@antfu/eslint-config': 4.12.0(@prettier/plugin-xml@3.4.1(prettier@3.5.3))(@typescript-eslint/utils@8.30.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.5.4))(@vue/compiler-sfc@3.5.13)(eslint-plugin-format@1.0.1(eslint@9.24.0(jiti@2.4.2)))(eslint-plugin-svelte@3.5.1(eslint@9.24.0(jiti@2.4.2))(svelte@5.26.1))(eslint@9.24.0(jiti@2.4.2))(svelte-eslint-parser@1.1.2(svelte@5.26.1))(typescript@5.5.4)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(jiti@2.4.2)(jsdom@26.0.0)(sass@1.86.3)(sugarss@2.0.0)(terser@5.31.6)(tsx@4.19.3)(yaml@2.7.1))
       '@prettier/plugin-xml': 3.4.1(prettier@3.5.3)
@@ -7725,6 +7737,13 @@ snapshots:
       - typescript
       - vitest
 
+  '@dvcol/neo-svelte@1.1.2(svelte@5.26.1)':
+    dependencies:
+      '@dvcol/common-utils': 1.29.4
+      '@dvcol/svelte-utils': 1.17.1(svelte@5.26.1)
+      '@skeletonlabs/floating-ui-svelte': 0.3.9(svelte@5.26.1)
+      svelte: 5.26.1
+
   '@dvcol/stylelint-plugin-presets@2.1.2(postcss-html@0.36.0(postcss-syntax@0.36.2)(postcss@8.5.3))(postcss-scss@4.0.9(postcss@8.5.3))(postcss@8.5.3)(prettier@3.5.3)(stylelint@16.18.0(typescript@5.5.4))':
     dependencies:
       chalk: 5.3.0
@@ -7749,7 +7768,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@dvcol/svelte-simple-router@1.11.2(svelte@5.26.1)':
+  '@dvcol/svelte-simple-router@2.0.1(svelte@5.26.1)':
     dependencies:
       '@dvcol/common-utils': 1.29.4
       '@dvcol/svelte-utils': 1.17.1(svelte@5.26.1)
@@ -8493,7 +8512,7 @@ snapshots:
       debug: 4.4.0
       fast-glob: 3.3.3
       is-glob: 4.0.3
-      minimatch: 9.0.4
+      minimatch: 9.0.5
       semver: 7.7.1
       ts-api-utils: 2.1.0(typescript@5.5.4)
       typescript: 5.5.4
