@@ -35,6 +35,8 @@ function getInput(hmr: boolean, _isWeb: boolean) {
 }
 
 const i18nRegex = /.*src\/i18n\/([a-zA-Z]+)\/.*\.json/;
+const slashRegex = /\\/g;
+const htmlRegex = /"\/assets\//g;
 
 type JsonLocale = Record<string, string>;
 function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
@@ -83,7 +85,7 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
       name: 'assets-rewrite',
       enforce: 'post',
       apply: 'build',
-      transformIndexHtml: (html, { path }) => html.replace(/"\/assets\//g, `"${relative(dirname(path), '/assets').replace(/\\/g, '/')}/`),
+      transformIndexHtml: (html, { path }) => html.replace(htmlRegex, `"${relative(dirname(path), '/assets').replace(slashRegex, '/')}/`),
     },
 
     {

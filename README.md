@@ -1,7 +1,7 @@
 <h1 align="center">Welcome to <i>Web Extension Template</i></h1>
 <p>
-  <img src="https://img.shields.io/badge/pnpm-%3E%3D7.0.0-blue.svg" />
-  <img src="https://img.shields.io/badge/node-%3E%3D17.0.0-blue.svg" />
+  <img src="https://img.shields.io/badge/pnpm-%3E%3D7.0.0-blue.svg" alt="pnpm verison" />
+  <img src="https://img.shields.io/badge/node-%3E%3D17.0.0-blue.svg" alt="node version" />
   <a href="https://github.com/dvcol/web-extension-template#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
