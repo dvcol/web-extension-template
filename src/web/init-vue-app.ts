@@ -1,4 +1,5 @@
 import type { App, Component } from 'vue';
+import type { Router } from 'vue-router';
 
 import type { RouterOptions } from '~/router';
 
@@ -18,7 +19,8 @@ export function initVueApp(component: Component, options: InitVueAppOption = {})
   if (!pinia) pinia = createPinia();
   app.use(pinia);
 
-  let router = getCurrentInstance()?.appContext?.config?.globalProperties?.$router;
+  // @vue/devtools is still on vue-router 4+
+  let router = getCurrentInstance()?.appContext?.config?.globalProperties?.$router as (Router | undefined);
   if (!router) router = RouterService.init(options);
   app.use(router);
 

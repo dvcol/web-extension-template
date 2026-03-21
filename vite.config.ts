@@ -1,4 +1,3 @@
-import type { InputOption } from 'rollup';
 import type { PluginOption } from 'vite';
 
 import { readdir, readFile, writeFile } from 'node:fs/promises';
@@ -17,7 +16,7 @@ import { isDev, port, resolveParent } from './scripts/utils';
 const isWeb = !!process.env.VITE_WEB;
 const sourcemap = !!process.env.VITE_SOURCEMAP;
 
-function getInput(hmr: boolean, _isWeb: boolean): InputOption {
+function getInput(hmr: boolean, _isWeb: boolean) {
   if (hmr) return { background: resolveParent('src/scripts/background/index.ts') };
 
   const inputs: Record<string, string> = {
@@ -150,6 +149,9 @@ export default defineConfig(() => ({
     '__VUE_PROD_DEVTOOLS__': isDev,
     'import.meta.env.PKG_VERSION': JSON.stringify(pkg.version),
     'import.meta.env.PKG_NAME': JSON.stringify(pkg.name),
+  },
+  devtools: {
+    enabled: process.env.VITE_DEVTOOLS === 'true',
   },
   plugins: getPlugins(isDev, isWeb),
   base: process.env.VITE_BASE || './',

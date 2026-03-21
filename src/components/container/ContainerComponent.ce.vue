@@ -11,7 +11,7 @@ const AppComponent = lazyComponent(() => import('~/components/AppComponent.vue')
 </template>
 
 <style lang="scss">
-@use '~/styles/base.scss';
+@use '~/styles/base';
 
 :host {
   display: flex;
