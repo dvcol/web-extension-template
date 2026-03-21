@@ -1,12 +1,10 @@
-import type { InputOption } from 'rollup';
 import type { PluginOption } from 'vite';
 
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import { sveltePreprocess } from 'svelte-preprocess';
+import { svelte, vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { defineConfig, loadEnv } from 'vite';
 import { checker } from 'vite-plugin-checker';
 import dtsPlugin from 'vite-plugin-dts';
@@ -15,7 +13,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import pkg from './package.json';
 import { isDev, port, resolveParent } from './scripts/utils';
 
-function getInput(hmr: boolean, _isWeb: boolean): InputOption {
+function getInput(hmr: boolean, _isWeb: boolean) {
   if (hmr) return { background: resolveParent('src/scripts/background/index.ts') };
 
   const inputs: Record<string, string> = {
@@ -34,12 +32,14 @@ function getInput(hmr: boolean, _isWeb: boolean): InputOption {
 }
 
 const i18nRegex = /.*src\/i18n\/([a-zA-Z]+)\/.*\.json/;
+const slashRegex = /\\/g;
+const htmlRegex = /"\/assets\//g;
 
 type JsonLocale = Record<string, string>;
 function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
   const plugins: PluginOption[] = [
     svelte({
-      preprocess: sveltePreprocess(),
+      preprocess: vitePreprocess(),
       emitCss: false,
     }),
     checker({
@@ -81,7 +81,7 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
       name: 'assets-rewrite',
       enforce: 'post',
       apply: 'build',
-      transformIndexHtml: (html, { path }) => html.replace(/"\/assets\//g, `"${relative(dirname(path), '/assets').replace(/\\/g, '/')}/`),
+      transformIndexHtml: (html, { path }) => html.replace(htmlRegex, `"${relative(dirname(path), '/assets').replace(slashRegex, '/')}/`),
     },
 
     {
@@ -152,6 +152,9 @@ export default defineConfig(({ mode }) => {
       '__VUE_PROD_DEVTOOLS__': isDev,
       'import.meta.env.PKG_VERSION': JSON.stringify(pkg.version),
       'import.meta.env.PKG_NAME': JSON.stringify(pkg.name),
+    },
+    devtools: {
+      enabled: process.env.VITE_DEVTOOLS === 'true',
     },
     plugins: getPlugins(isDev, isWeb),
     base: env.VITE_BASE ?? './',

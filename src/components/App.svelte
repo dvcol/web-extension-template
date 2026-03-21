@@ -1,7 +1,9 @@
 <script lang="ts">
   import type { AppProps } from '~/components/app.model';
 
-  import { NeoLazy, NeoPortalContainer, NeoSuspense, NeoThemeProvider } from '@dvcol/neo-svelte';
+  import { NeoPortalContainer } from '@dvcol/neo-svelte/floating';
+  import { NeoLazy, NeoSuspense } from '@dvcol/neo-svelte/loading';
+  import { NeoThemeProvider } from '@dvcol/neo-svelte/providers';
   import { onMount } from 'svelte';
 
   import { Logger } from '~/services/logger.service';

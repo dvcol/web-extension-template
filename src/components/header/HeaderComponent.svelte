@@ -1,7 +1,8 @@
 <script lang="ts">
+
   import type { RouteNames } from '~/router/routes';
 
-  import { NeoTab, NeoTabs } from '@dvcol/neo-svelte';
+  import { NeoTab, NeoTabs } from '@dvcol/neo-svelte/nav';
   import { resolveComponent } from '@dvcol/svelte-utils';
 
   import { router } from '~/router/router';
