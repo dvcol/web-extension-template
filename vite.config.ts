@@ -4,7 +4,8 @@ import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 
-import react from '@vitejs/plugin-react';
+import babel from '@rolldown/plugin-babel';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { defineConfig } from 'vite';
 import { checker } from 'vite-plugin-checker';
 import dtsPlugin from 'vite-plugin-dts';
@@ -41,10 +42,9 @@ const htmlRegex = /"\/assets\//g;
 type JsonLocale = Record<string, string>;
 function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
   const plugins: PluginOption[] = [
-    react({
-      babel: {
-        plugins: ['babel-plugin-react-compiler'],
-      },
+    react(),
+    babel({
+      presets: [reactCompilerPreset()],
     }),
     checker({
       typescript: {
