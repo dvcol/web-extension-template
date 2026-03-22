@@ -10,9 +10,9 @@ describe('i18n.utils.ts', () => {
     vi.clearAllMocks();
   });
 
-  const i18nStoreMock = { i18n: vi.fn(), lang: 'en', locales: { en: {} }, addLocale: vi.fn() };
+  const i18nStoreMock = { i18n: vi.fn(), lang: 'en', locales: { en: {} }, addLocale: vi.fn(), subscribe: vi.fn() };
   const chromeI18nMock = vi.fn();
-  vi.spyOn(I18nStore, 'useI18nStore').mockReturnValue(i18nStoreMock as never);
+  vi.spyOn(I18nStore, 'I18nStore', 'get').mockReturnValue(i18nStoreMock as never);
   vi.spyOn(I18nUtils, 'useI18nTranslate').mockImplementation(chromeI18nMock);
 
   it('should use the local store to resolve i18n', () => {

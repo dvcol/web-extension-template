@@ -1,4 +1,4 @@
-import { Logger } from '~/services/logger.service.ts';
+import { Logger } from '~/services/logger.service';
 import defineComponent from '~/web/define-component';
 
 defineComponent({ baseUrl: import.meta.env.VITE_BASE, view: { panel: true, web: import.meta.env.VITE_WEB ?? false } })

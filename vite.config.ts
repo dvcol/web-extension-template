@@ -4,7 +4,7 @@ import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 
-import vue from '@vitejs/plugin-vue';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { checker } from 'vite-plugin-checker';
 import dtsPlugin from 'vite-plugin-dts';
@@ -41,13 +41,13 @@ const htmlRegex = /"\/assets\//g;
 type JsonLocale = Record<string, string>;
 function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
   const plugins: PluginOption[] = [
-    vue({
-      features: {
-        customElement: true,
+    react({
+      babel: {
+        plugins: ['babel-plugin-react-compiler'],
       },
     }),
     checker({
-      vueTsc: {
+      typescript: {
         tsconfigPath: 'tsconfig.app.json',
       },
     }),
@@ -147,8 +147,6 @@ export default defineConfig(() => ({
   },
   define: {
     '__DEV__': isDev,
-    '__VUE_OPTIONS_API__': false,
-    '__VUE_PROD_DEVTOOLS__': isDev,
     'import.meta.env.PKG_VERSION': JSON.stringify(pkg.version),
     'import.meta.env.PKG_NAME': JSON.stringify(pkg.name),
   },
@@ -170,6 +168,11 @@ export default defineConfig(() => ({
     cors: true,
     open: true,
     host: true,
+  },
+  css: {
+    modules: {
+      localsConvention: 'camelCaseOnly',
+    },
   },
   build: {
     outDir: resolveParent('dist'),

@@ -1,15 +1,4 @@
-<script setup lang="ts">
-import IconLoadingMatrix from '~/components/icons/IconLoadingMatrix.vue';
-</script>
-
-<template>
-  <div class="loading-container">
-    <IconLoadingMatrix class="loader" />
-  </div>
-</template>
-
-<style lang="scss" scoped>
-.loading-container {
+.loadingContainer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,4 +20,3 @@ import IconLoadingMatrix from '~/components/icons/IconLoadingMatrix.vue';
     }
   }
 }
-</style>

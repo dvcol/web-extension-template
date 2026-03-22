@@ -5,6 +5,6 @@
     "types": ["node", "jsdom", "vitest/globals"],
     "strict": true
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": []
 }

@@ -1,15 +1,34 @@
 import type { Locale, Locales } from '~/models/i18n.model';
 import type { BrowserI18nInput } from '~/utils/browser/browser-i18n.utils';
 
-import { defineStore, storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+let storeLang = 'en';
+let storeLocales: Locales = {};
+const listeners = new Set<() => void>();
 
-export const useI18nStore = defineStore('i18n', () => {
-  const lang = ref<string>('en');
-  const locales = ref<Locales>({});
-  const locale = computed<Locale>(() => locales.value[lang.value]);
+function notify() {
+  listeners.forEach(fn => fn());
+}
 
-  const i18n = (value: string | BrowserI18nInput, ...modules: string[]) => {
+export const I18nStore = {
+  get lang(): string {
+    return storeLang;
+  },
+
+  get locales(): Locales {
+    return storeLocales;
+  },
+
+  get locale(): Locale | undefined {
+    return storeLocales[storeLang];
+  },
+
+  addLocale(_locale: Locale, _lang = storeLang, merge = false): Locales {
+    storeLocales[_lang] = merge ? { ...storeLocales[_lang], ..._locale } : _locale;
+    notify();
+    return storeLocales;
+  },
+
+  i18n(value: string | BrowserI18nInput, ...modules: string[]): string {
     const path: string = Array.isArray(modules) ? modules.join('__') : modules;
 
     let key: string;
@@ -21,7 +40,7 @@ export const useI18nStore = defineStore('i18n', () => {
       substitution = value?.substitutions;
     }
 
-    let result: string = locale.value?.[key]?.message || key;
+    let result: string = I18nStore.locale?.[key]?.message || key;
 
     if (substitution?.length) {
       for (let i = 0; i < substitution.length; i += 1) {
@@ -30,14 +49,10 @@ export const useI18nStore = defineStore('i18n', () => {
     }
 
     return result;
-  };
+  },
 
-  const addLocale = (_locale: Locale, _lang = lang.value, merge = false) => {
-    locales.value[_lang] = merge ? { ...locales.value[_lang], ..._locale } : _locale;
-    return locales.value;
-  };
-
-  return { lang, locales, locale, i18n, addLocale };
-});
-
-export const useI18nStoreRefs = () => storeToRefs(useI18nStore());
+  subscribe(fn: () => void): () => void {
+    listeners.add(fn);
+    return () => listeners.delete(fn);
+  },
+};

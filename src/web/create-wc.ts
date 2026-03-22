@@ -1,51 +1,33 @@
-import type { DevToolsHook, DevToolsHooks } from '@vue/devtools';
-import type { Component, ComponentInternalInstance } from 'vue';
-
-import type { InitVueAppOption } from '~/web/init-vue-app';
-
-import { defineCustomElement, getCurrentInstance, h } from 'vue';
+import { createElement } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import { Logger } from '~/services/logger.service';
-import { initVueApp } from '~/web/init-vue-app';
 
-type ComponentInstance = ComponentInternalInstance & { provides: ComponentInternalInstance['appContext']['provides'] };
+import type { DefineOption } from '~/web/define-component';
 
-declare global {
-  interface Window {
-    __VUE_DEVTOOLS_GLOBAL_HOOK__: DevToolsHook & { Vue: Component };
-  }
-}
+export function createElementInstance(options: DefineOption, name: string) {
+  return class AppWc extends HTMLElement {
+    connectedCallback() {
+      const shadowRoot = this.attachShadow({ mode: 'closed' });
 
-export function createElementInstance(component: Component, { name, ...options }: InitVueAppOption & { name: string }) {
-  return defineCustomElement({
-    setup(props) {
-      const app = initVueApp(component, options);
+      // Inject global styles into the shadow root via adoptedStyleSheets
+      import('~/components/container/container.global.scss?inline')
+        .then(({ default: css }) => {
+          const sheet = new CSSStyleSheet();
+          sheet.replaceSync(css);
+          shadowRoot.adoptedStyleSheets = [sheet];
+        })
+        .catch(err => Logger.error(`Failed to inject styles into '${name}'`, err));
 
-      const inst = getCurrentInstance() as ComponentInstance;
-      if (inst) {
-        Object.assign(inst.appContext, app._context);
-        Object.assign(inst.provides, app._context.provides);
+      const mountPoint = document.createElement('div');
+      mountPoint.style.cssText = 'display:contents';
+      shadowRoot.appendChild(mountPoint);
 
-        // Add support for Vue Devtools
-        if (import.meta.env.DEV && window.__VUE_DEVTOOLS_GLOBAL_HOOK__) {
-          app._container = document.querySelector(name);
-          app._instance = inst;
-
-          const types = {
-            Comment: Symbol('v-cmt'),
-            Fragment: Symbol('v-fgt'),
-            Static: Symbol('v-stc'),
-            Text: Symbol('v-txt'),
-          };
-
-          window.__VUE_DEVTOOLS_GLOBAL_HOOK__.emit('app:init' as DevToolsHooks, app, app.version, types);
-          window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app;
-
-          Logger.info('Vue Devtools is enabled.');
-        }
-      }
-
-      return () => h(component, props);
-    },
-  });
+      import('~/components/container/ContainerComponent')
+        .then(({ ContainerComponent }) => {
+          createRoot(mountPoint).render(createElement(ContainerComponent, options));
+        })
+        .catch(err => Logger.error(`Failed to mount '${name}'`, err));
+    }
+  };
 }

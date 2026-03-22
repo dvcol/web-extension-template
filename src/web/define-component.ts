@@ -1,5 +1,3 @@
-import type { Component } from 'vue';
-
 export enum WebComponents {
   WebExtensionTemplate = 'wc-web-extension-template',
 }
@@ -15,9 +13,12 @@ export async function defineComponent(options: DefineOption = {}, component: Web
   if (customElements.get(component)) {
     console.warn(`Custom element '${component}' is already defined.`);
   } else {
-    const [{ createElementInstance }, { lazyComponent }] = await Promise.all([import('~/web/create-wc'), import('~/utils/lazy.utils')]);
-    const ContainerComponent = lazyComponent(async () => import('~/components/container/ContainerComponent.ce.vue') as Promise<Component>);
-    const WebComponent = createElementInstance(ContainerComponent, { name: component, ...options });
+    const [{ createElementInstance }, { initServices }] = await Promise.all([
+      import('~/web/create-wc'),
+      import('~/web/init-services'),
+    ]);
+    initServices(options.view).catch(console.error);
+    const WebComponent = createElementInstance(options, component);
     customElements.define(component, WebComponent);
   }
   return customElements.whenDefined(component);

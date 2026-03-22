@@ -1,3 +1,3 @@
-import { defineVueConfig } from '@dvcol/eslint-config';
+import { defineReactConfig } from '@dvcol/eslint-config';
 
-export default defineVueConfig();
+export default defineReactConfig();

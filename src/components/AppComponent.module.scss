@@ -1,33 +1,8 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router';
-
-import PageLoading from '~/components/common/loading/PageLoading.vue';
-</script>
-
-<template>
-  <RouterView v-slot="{ Component }">
-    <header>
-      <nav />
-    </header>
-    <main>
-      <Transition name="scale" mode="out-in">
-        <KeepAlive>
-          <component :is="Component ?? PageLoading" />
-        </KeepAlive>
-      </Transition>
-    </main>
-    <footer />
-  </RouterView>
-</template>
-
-<style lang="scss" scoped>
 @use '~/styles/mixin' as mixin;
 @use '~/styles/layout' as layout;
 @use '~/styles/z-index' as layers;
-@use '~/styles/transition' as transition;
-@include transition.scale;
 
-header {
+.header {
   position: absolute;
   top: 0;
   z-index: layers.$layer-ui;
@@ -49,7 +24,7 @@ header {
   }
 }
 
-main {
+.main {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -58,20 +33,51 @@ main {
   min-height: layout.$main-content-height;
   margin-top: layout.$safe-navbar-height;
 
-  &.full-height {
+  &.fullHeight {
     min-height: var(--full-height);
     margin-top: 0;
 
-    :deep(.loading-container) {
+    .loadingContainer {
       padding-top: layout.$safe-navbar-height;
     }
   }
 }
 
-footer {
+.footer {
   position: fixed;
   bottom: 0;
   z-index: layers.$layer-ui;
   width: 100%;
 }
-</style>
+
+.scaleEnter {
+  animation: scale-in 0.25s ease forwards;
+}
+
+.scaleLeave {
+  animation: scale-out 0.25s ease forwards;
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}

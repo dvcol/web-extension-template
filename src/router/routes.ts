@@ -1,25 +1,18 @@
-import type { RouteComponent, RouteRecordRaw } from 'vue-router';
+import { lazy } from 'react';
 
 export enum Route {
-  Home = 'home',
-  Hello = 'hello',
-  Goodbye = 'goodbye',
+  Home = '/',
+  Hello = '/hello',
+  Goodbye = '/goodbye',
 }
 
-export const routes: RouteRecordRaw[] = [
+export const routes = [
   {
-    path: '/',
-    name: Route.Home,
-    redirect: { name: 'hello' },
+    path: Route.Hello,
+    Component: lazy(() => import('~/components/views/hello/HelloComponent').then(m => ({ default: m.HelloComponent }))),
   },
   {
-    path: `/${Route.Hello}`,
-    name: Route.Hello,
-    component: async () => import('~/components/views/hello/HelloComponent.vue') as Promise<RouteComponent>,
-  },
-  {
-    path: `/${Route.Goodbye}`,
-    name: Route.Goodbye,
-    component: async () => import('~/components/views/goodbye/GoodbyeComponent.vue') as Promise<RouteComponent>,
+    path: Route.Goodbye,
+    Component: lazy(() => import('~/components/views/goodbye/GoodbyeComponent').then(m => ({ default: m.GoodbyeComponent }))),
   },
 ];

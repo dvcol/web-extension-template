@@ -1,16 +1,27 @@
-import type { Router } from 'vue-router';
+import { createHashRouter, redirect } from 'react-router-dom';
 
-import { createRouter as createVueRouter, createWebHashHistory } from 'vue-router';
-
-import { routes } from '~/router/routes';
+import { Route, routes } from '~/router/routes';
 
 export interface RouterOptions {
   baseName?: string;
   baseUrl?: string;
 }
-export function createRouter({ baseName = '', baseUrl = import.meta.env.BASE_URL }: RouterOptions): Router {
-  return createVueRouter({
-    history: createWebHashHistory(baseUrl),
-    routes: routes.map(r => ({ ...r, path: `${baseName}${r.path}` })),
-  });
+
+export function createRouter({ baseName = '' }: RouterOptions = {}) {
+  return createHashRouter([
+    {
+      path: '/',
+      lazy: async () => {
+        const { AppComponent } = await import('~/components/AppComponent');
+        return { Component: AppComponent };
+      },
+      children: [
+        {
+          index: true,
+          loader: () => redirect(`${baseName}${Route.Hello}`),
+        },
+        ...routes.map(r => ({ ...r, path: `${baseName}${r.path}` })),
+      ],
+    },
+  ]);
 }
