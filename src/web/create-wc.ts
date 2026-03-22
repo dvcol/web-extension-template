@@ -10,6 +10,8 @@ export function createElementInstance(options: DefineOption, name: string) {
     connectedCallback() {
       const shadowRoot = this.attachShadow({ mode: 'closed' });
 
+      const children = Array.from(this.children);
+
       // Inject global styles into the shadow root via adoptedStyleSheets
       import('~/components/container/container.global.scss?inline')
         .then(({ default: css }) => {
@@ -19,13 +21,10 @@ export function createElementInstance(options: DefineOption, name: string) {
         })
         .catch(err => Logger.error(`Failed to inject styles into '${name}'`, err));
 
-      // const mountPoint = document.createElement('div');
-      // mountPoint.style.cssText = 'display:contents';
-      // shadowRoot.appendChild(mountPoint);
-
       import('~/components/container/ContainerComponent')
         .then(({ ContainerComponent }) => {
           createRoot(shadowRoot).render(createElement(ContainerComponent, options));
+          children?.forEach(child => child.remove());
         })
         .catch(err => Logger.error(`Failed to mount '${name}'`, err));
     }
