@@ -9,10 +9,10 @@ export enum Route {
 export const routes = [
   {
     path: Route.Hello,
-    Component: lazy(() => import('~/components/views/hello/HelloComponent').then(m => ({ default: m.HelloComponent }))),
+    Component: lazy(async () => import('~/components/views/hello/HelloComponent').then(m => ({ default: m.HelloComponent }))),
   },
   {
     path: Route.Goodbye,
-    Component: lazy(() => import('~/components/views/goodbye/GoodbyeComponent').then(m => ({ default: m.GoodbyeComponent }))),
+    Component: lazy(async () => import('~/components/views/goodbye/GoodbyeComponent').then(m => ({ default: m.GoodbyeComponent }))),
   },
 ];

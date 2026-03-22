@@ -3,7 +3,7 @@ import type { Locale, Locales } from '~/models/i18n.model';
 import { Logger } from '~/services/logger.service';
 import { RouterService } from '~/services/router.service';
 import { I18nStore } from '~/stores/i18n.store';
-import { useI18nTranslate } from '~/utils/browser/browser-i18n.utils';
+import { createI18nTranslate } from '~/utils/browser/browser-i18n.utils';
 import { chromeI18n } from '~/utils/browser/browser.utils';
 
 let promise: Promise<Locales | void> | undefined;
@@ -32,11 +32,11 @@ export function initLocalI18n(baseUrl = RouterService.baseUrl) {
  * @param roots modules names
  * @see chrome.i18n.getMessage
  */
-export function useI18n(...roots: string[]): ReturnType<typeof useI18nTranslate> {
+export function getI18n(...roots: string[]): ReturnType<typeof createI18nTranslate> {
   if (!chromeI18n) {
     initLocalI18n();
     return (value, ...modules) => I18nStore.i18n(value, ...(modules?.length ? modules : roots));
   }
 
-  return useI18nTranslate(...roots);
+  return createI18nTranslate(...roots);
 }

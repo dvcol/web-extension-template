@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 
 import { Route } from '~/router';
-import { useI18n } from '~/utils/i18n.utils';
+import { getI18n } from '~/utils/i18n.utils';
 
 import styles from './GoodbyeComponent.module.scss';
 
 export function GoodbyeComponent() {
-  const i18n = useI18n('goodbye');
+  const i18n = getI18n('goodbye');
 
   return (
     <div className={styles.text}>

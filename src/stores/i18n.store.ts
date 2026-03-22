@@ -1,8 +1,8 @@
 import type { Locale, Locales } from '~/models/i18n.model';
 import type { BrowserI18nInput } from '~/utils/browser/browser-i18n.utils';
 
-let storeLang = 'en';
-let storeLocales: Locales = {};
+const storeLang = 'en';
+const storeLocales: Locales = {};
 const listeners = new Set<() => void>();
 
 function notify() {

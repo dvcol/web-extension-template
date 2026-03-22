@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import * as I18nUtils from '~/utils/browser/browser-i18n.utils';
 
 import * as I18nStore from '../stores/i18n.store';
-import { useI18n } from './i18n.utils';
+import { getI18n } from './i18n.utils';
 
 describe('i18n.utils.ts', () => {
   afterEach(() => {
@@ -13,12 +13,12 @@ describe('i18n.utils.ts', () => {
   const i18nStoreMock = { i18n: vi.fn(), lang: 'en', locales: { en: {} }, addLocale: vi.fn(), subscribe: vi.fn() };
   const chromeI18nMock = vi.fn();
   vi.spyOn(I18nStore, 'I18nStore', 'get').mockReturnValue(i18nStoreMock as never);
-  vi.spyOn(I18nUtils, 'useI18nTranslate').mockImplementation(chromeI18nMock);
+  vi.spyOn(I18nUtils, 'createI18nTranslate').mockImplementation(chromeI18nMock);
 
   it('should use the local store to resolve i18n', () => {
     expect.assertions(4);
 
-    const i18n = useI18n('root');
+    const i18n = getI18n('root');
     expect(i18n).toBeInstanceOf(Function);
 
     i18n('value');

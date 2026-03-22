@@ -29,7 +29,7 @@ export function i18nTranslate(value: string | BrowserI18nInput, ...modules: stri
  * @param roots modules names
  * @see chrome.i18n.getMessage
  */
-export function useI18nTranslate(...roots: string[]): typeof i18nTranslate {
+export function createI18nTranslate(...roots: string[]): typeof i18nTranslate {
   return (value, ...modules): string =>
     i18nTranslate(value, ...(modules?.length ? modules : roots));
 }

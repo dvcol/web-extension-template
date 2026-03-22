@@ -1,9 +1,9 @@
+import type { DefineOption } from '~/web/define-component';
+
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { Logger } from '~/services/logger.service';
-
-import type { DefineOption } from '~/web/define-component';
 
 export function createElementInstance(options: DefineOption, name: string) {
   return class AppWc extends HTMLElement {
@@ -19,13 +19,13 @@ export function createElementInstance(options: DefineOption, name: string) {
         })
         .catch(err => Logger.error(`Failed to inject styles into '${name}'`, err));
 
-      const mountPoint = document.createElement('div');
-      mountPoint.style.cssText = 'display:contents';
-      shadowRoot.appendChild(mountPoint);
+      // const mountPoint = document.createElement('div');
+      // mountPoint.style.cssText = 'display:contents';
+      // shadowRoot.appendChild(mountPoint);
 
       import('~/components/container/ContainerComponent')
         .then(({ ContainerComponent }) => {
-          createRoot(mountPoint).render(createElement(ContainerComponent, options));
+          createRoot(shadowRoot).render(createElement(ContainerComponent, options));
         })
         .catch(err => Logger.error(`Failed to mount '${name}'`, err));
     }
