@@ -33,11 +33,11 @@
   min-height: layout.$main-content-height;
   margin-top: layout.$safe-navbar-height;
 
-  &.fullHeight {
+  &.full-height {
     min-height: var(--full-height);
     margin-top: 0;
 
-    .loadingContainer {
+    .loading-container {
       padding-top: layout.$safe-navbar-height;
     }
   }
@@ -50,11 +50,11 @@
   width: 100%;
 }
 
-.scaleEnter {
+.scale-enter {
   animation: scale-in 0.25s ease forwards;
 }
 
-.scaleLeave {
+.scale-leave {
   animation: scale-out 0.25s ease forwards;
 }
 

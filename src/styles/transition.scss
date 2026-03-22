@@ -1,15 +1,22 @@
-@mixin fade(
-  $from: 0,
-  $transition: 0.2s ease
-) {
+@mixin fade($from: 0, $transition: 0.2s ease) {
   @keyframes fade-in {
-    from { opacity: $from; }
-    to { opacity: 1; }
+    from {
+      opacity: $from;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes fade-out {
-    from { opacity: 1; }
-    to { opacity: $from; }
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: $from;
+    }
   }
 
   .fade-enter {
@@ -23,11 +30,7 @@
   }
 }
 
-@mixin scale(
-  $scale: 0.95,
-  $opacity: 0,
-  $transition: 0.25s ease
-) {
+@mixin scale($scale: 0.95, $opacity: 0, $transition: 0.25s ease) {
   @keyframes scale-in {
     from {
       transform: scale($scale);
@@ -63,11 +66,7 @@
   }
 }
 
-@mixin height(
-  $height: 100%,
-  $opacity: 1,
-  $transition: 0.25s ease
-) {
+@mixin height($height: 100%, $opacity: 1, $transition: 0.25s ease) {
   @keyframes height-in {
     from {
       max-height: 0;

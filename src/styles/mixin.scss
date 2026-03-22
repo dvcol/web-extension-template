@@ -11,8 +11,7 @@
   -webkit-backdrop-filter: blur($blur);
   backdrop-filter: blur($blur);
   transition: $transition-prop $transition;
-  will-change: color, background, background-color, backdrop-filter, box-shadow,
-    border-color, scale, opacity, backdrop-filter;
+  will-change: color, background, background-color, backdrop-filter, box-shadow, border-color, scale, opacity, backdrop-filter;
 
   &:active,
   &:hover {
@@ -23,11 +22,7 @@
   }
 }
 
-
-@mixin hover-background-only(
-  $from: var(--custom-bg-color, var(--bg-color)),
-  $to: var(--custom-bg-color-hover, var(--bg-color-hover)),
-) {
+@mixin hover-background-only($from: var(--custom-bg-color, var(--bg-color)), $to: var(--custom-bg-color-hover, var(--bg-color-hover))) {
   background: $from;
 
   &:active,
@@ -39,15 +34,9 @@
 @mixin progress-background(
   $color: var(--progress-color, var(--color-primary)),
   $rail: var(--rail-color, var(--color-primary-focus)),
-  $progress: var(--progress, 0%),
+  $progress: var(--progress, 0%)
 ) {
-  background: linear-gradient(
-                  to right,
-                  $color 0%,
-                  $color var(--progress, 0%),
-                  $rail $progress,
-                  $rail 100%
-  );
+  background: linear-gradient(to right, $color 0%, $color var(--progress, 0%), $rail $progress, $rail 100%);
 }
 
 @mixin hover-box-shadow($transition: 0.5s var(--n-bezier), $box-shadow: var(--image-box-shadow-hover)) {
@@ -67,10 +56,10 @@
     overflow: hidden;
     opacity: 0;
     transition:
-            scale 0.5s $transition,
-            opacity 0.5s $transition,
-            max-height 0.25s $transition,
-            margin-top 0.5s $transition;
+      scale 0.5s $transition,
+      opacity 0.5s $transition,
+      max-height 0.25s $transition,
+      margin-top 0.5s $transition;
     scale: 0.95;
 
     &.show {
@@ -78,10 +67,10 @@
       margin-top: initial;
       opacity: 1;
       transition:
-              scale 0.5s $transition,
-              opacity 0.5s $transition,
-              max-height 0.25s $transition,
-              margin-top 0.25s $transition;
+        scale 0.5s $transition,
+        opacity 0.5s $transition,
+        max-height 0.25s $transition,
+        margin-top 0.25s $transition;
       scale: 1;
     }
   }
