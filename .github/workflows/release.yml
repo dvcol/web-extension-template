@@ -17,6 +17,10 @@ on:
         required: false
         type: boolean
 
+permissions:
+  contents: write
+  id-token: write
+
 jobs:
   release:
     name: 📦 Tag and release commit
@@ -28,7 +32,7 @@ jobs:
 
     steps:
       - name: ⛙ Checkout branch ${{ github.ref }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: main
           fetch-depth: 0
