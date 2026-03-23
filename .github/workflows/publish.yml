@@ -16,14 +16,22 @@ on:
         required: false
         type: boolean
 
+# Permission to generate an OIDC token
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   publish-npm:
     name: ☁️ Publish npm
     runs-on: ubuntu-latest
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/@dvcol/web-extension-template
 
     steps:
       - name: ⛙ Checkout branch ${{ github.ref }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: main
           fetch-depth: 0
@@ -35,20 +43,29 @@ jobs:
 
       - name: ☁️ Publish to npm
         if: ${{ inputs.skip-npm != true }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          # =================  ☁️ Publish to npm =================
-          pnpm publish
+          # =================  ☁️ Publish =================
+          # Check status
+          git status
+          git diff --color -U0 | cat
+
+          # Ensure npm 11.5.1 or later for trusted publishing
+          npm install -g npm@latest
+
+          # Publish
+          pnpm publish --provenance
 
   publish-store:
     name: 🚀 Publish extension
     runs-on: ubuntu-latest
+    environment:
+      name: chrome
+      url: https://chrome.google.com/webstore/devconsole/
     if: ${{ github.event.workflow_run.conclusion != 'failure' }}
 
     steps:
       - name: ⛙ Checkout branch ${{ github.ref }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.commit-hash || 'main' }}
           fetch-depth: 0
