@@ -1,12 +1,12 @@
 // @ts-expect-error chrome issue
 import type { chrome } from 'chrome';
 
-import type { DefineComponent, WebComponents } from '~/web/define-component';
+import type { DefineComponent, WebComponent, WebComponents } from '~/web/define-component';
 
 export const baseUrl = 'web-extension-template';
 
 interface WebExtensionTemplate {
-  WebComponents: WebComponents;
+  WebComponents: WebComponent;
   defineComponent: DefineComponent;
   default: DefineComponent;
 }

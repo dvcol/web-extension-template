@@ -1,6 +1,6 @@
 import type { RouteObject } from 'react-router';
 
-import { PageLoading } from '~/components/common/loading/PageLoading';
+import { RouterHydrate } from '~/components/common/loading/RouteLoading';
 
 export enum Route {
   Home = '/',
@@ -8,7 +8,7 @@ export enum Route {
   Goodbye = '/goodbye',
 }
 
-const HydrateFallback = PageLoading;
+const HydrateFallback = RouterHydrate;
 
 export const routes: RouteObject[] = [
   {
