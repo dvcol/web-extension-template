@@ -1,7 +1,4 @@
-import { Suspense } from 'react';
 import { Outlet } from 'react-router';
-
-import { PageLoading } from '~/components/common/loading/PageLoading';
 
 import styles from './AppComponent.module.scss';
 
@@ -12,9 +9,7 @@ export function AppComponent() {
         <nav />
       </header>
       <main className={styles.main}>
-        <Suspense fallback={<PageLoading />}>
-          <Outlet />
-        </Suspense>
+        <Outlet />
       </main>
       <footer className={styles.footer} />
     </>
