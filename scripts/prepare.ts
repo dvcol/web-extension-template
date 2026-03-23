@@ -5,21 +5,21 @@ import { watch } from 'chokidar';
 import fs from 'fs-extra';
 
 import { writeManifest } from './manifest';
-import { getDirName, isDev, resolveParent } from './utils';
+import { getDirName, isDev, outDir, resolveParent } from './utils';
 
 /**
  * Replace index.html with link to vite localhost for hot reload
  * @param view the view to replace
  */
 async function copyIndexHtml(view: string) {
-  fs.ensureDirSync(resolveParent(`dist/views/${view}`));
+  fs.ensureDirSync(resolveParent(`${outDir}/views/${view}`));
   const data = fs.readFileSync(resolveParent(`src/views/${view}/index.html`), 'utf-8').replace(
     '<script type="module" src="./main.ts"></script>',
     `<script type="module" src="http://localhost:3303/@vite/client"></script>
     <script type="module" src="http://localhost:3303/views/${view}/main.ts"></script>`,
   );
-  fs.writeFileSync(resolveParent(`dist/views/${view}/index.html`), data, 'utf-8');
-  console.info(`Stubbing '${view}' to '${getDirName()}/dist/views/${view}/index.html'`);
+  fs.writeFileSync(resolveParent(`${outDir}/views/${view}/index.html`), data, 'utf-8');
+  console.info(`Stubbing '${view}' to '${getDirName()}/${outDir}/views/${view}/index.html'`);
 }
 
 /**
@@ -28,20 +28,20 @@ async function copyIndexHtml(view: string) {
 const copyViews = async (views = ['options', 'popup', 'panel']) => views.map(copyIndexHtml);
 
 /**
- * Copy extension icons to dist folder
+ * Copy extension icons to outDir folder
  */
 async function copyIcons(_isDev: boolean) {
-  if (_isDev) return fs.symlink(resolveParent('icons'), resolveParent('dist/icons'), 'junction');
-  return fs.copySync('icons', 'dist/icons', { overwrite: true });
+  if (_isDev) return fs.symlink(resolveParent('icons'), resolveParent(`${outDir}/icons`), 'junction');
+  return fs.copySync('icons', `${outDir}/icons`, { overwrite: true });
 }
 
 /**
- * Copy extension icons to dist folder
+ * Copy extension icons to outDir folder
  */
-const copyAssets = async () => fs.symlink(resolveParent('src/assets'), resolveParent('dist/assets'), 'junction');
+const copyAssets = async () => fs.symlink(resolveParent('src/assets'), resolveParent(`${outDir}/assets`), 'junction');
 
 /**
- * Prepare dist folder with manifest.json and views
+ * Prepare outDir folder with manifest.json and views
  */
 async function prepare(hmr = isDev) {
   writeManifest().catch(e => console.error('Failed to write manifest.json', e));
@@ -50,7 +50,7 @@ async function prepare(hmr = isDev) {
 
   mergeJson({
     pattern: 'src/i18n/en/**/*.json',
-    output: 'dist/_locales/en/messages.json',
+    output: `${outDir}/_locales/en/messages.json`,
   }).catch((e: Error) => console.error('Failed to merge jsons', e));
 
   if (hmr) {
@@ -77,7 +77,7 @@ async function prepare(hmr = isDev) {
     watch([resolveParent('src/i18n/en/**/*.json')]).on('change', () => {
       mergeJson({
         pattern: 'src/i18n/en/**/*.json',
-        output: 'dist/_locales/en/messages.json',
+        output: `${outDir}/_locales/en/messages.json`,
       }).catch((e: Error) => console.error('Failed to merge jsons', e));
     });
 
@@ -85,4 +85,4 @@ async function prepare(hmr = isDev) {
   }
 }
 
-prepare().catch(e => console.error('Failed to prepare dist folder', e));
+prepare().catch(e => console.error(`Failed to prepare ${outDir} folder`, e));
