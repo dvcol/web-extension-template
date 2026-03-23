@@ -1,4 +1,5 @@
 import type { MessagePayload } from '~/models/message.model';
+import type { DefineOption } from '~/web/define-component';
 
 import { LoggerColor } from '@dvcol/common-utils/common/logger';
 
@@ -16,8 +17,8 @@ async function onVersionUpdate(storageKey = MessageType.VersionUpdate) {
   await storage.local.remove(storageKey);
 }
 
-export async function initServices(options: { option?: boolean; popup?: boolean; panel?: boolean; web?: boolean } = {}) {
-  await initLocalI18n().promise;
+export async function initServices(options: DefineOption = {}) {
+  await initLocalI18n(options.baseUrl).promise;
 
   Logger.info(...Logger.colorize(LoggerColor.Success, Logger.timestamp, 'All services initialized!'), options);
 

@@ -19,7 +19,7 @@ export async function defineComponent(options: DefineOption = {}, component: Web
       import('~/web/create-wc'),
       import('~/web/init-services'),
     ]);
-    initServices(options.view).catch(console.error);
+    await initServices(options).catch(console.error);
     const WebComponent = createElementInstance(options, component);
     customElements.define(component, WebComponent);
   }
