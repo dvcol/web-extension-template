@@ -4,6 +4,8 @@ import { RouterProvider } from 'react-router-dom';
 
 import { RouterService } from '~/services/router.service';
 
+import './container.global.scss';
+
 export function ContainerComponent(options: DefineOption) {
   const router = RouterService.init(options);
 

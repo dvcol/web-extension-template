@@ -7,26 +7,19 @@ import { Logger } from '~/services/logger.service';
 
 export function createElementInstance(options: DefineOption, name: string) {
   return class AppWc extends HTMLElement {
-    connectedCallback() {
+    async connectedCallback() {
       const shadowRoot = this.attachShadow({ mode: 'closed' });
 
       const children = Array.from(this.children);
 
-      // Inject global styles into the shadow root via adoptedStyleSheets
-      import('~/components/container/container.global.scss?inline')
-        .then(({ default: css }) => {
-          const sheet = new CSSStyleSheet();
-          sheet.replaceSync(css);
-          shadowRoot.adoptedStyleSheets = [sheet];
-        })
-        .catch(err => Logger.error(`Failed to inject styles into '${name}'`, err));
-
-      import('~/components/container/ContainerComponent')
-        .then(({ ContainerComponent }) => {
-          createRoot(shadowRoot).render(createElement(ContainerComponent, options));
-          children?.forEach(child => child.remove());
-        })
-        .catch(err => Logger.error(`Failed to mount '${name}'`, err));
-    }
+      try {
+        const { ContainerComponent } = await import('~/components/container/ContainerComponent');
+        createRoot(shadowRoot).render(createElement(ContainerComponent, options));
+        children?.forEach(child => child.remove());
+      } catch (error) {
+        Logger.error(`Failed to mount '${name}'`, error);
+        throw error;
+      }
+    };
   };
 }
