@@ -13,6 +13,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 import pkg from './package.json';
 import { isDev, isWeb, outDir, port, resolveParent, sourcemap } from './scripts/utils';
+import { shadowPreload } from './scripts/vite-plugin-shadow-preload';
 
 function getInput(hmr: boolean, _isWeb: boolean): Record<string, string> {
   if (hmr) return { background: resolveParent('src/scripts/background/index.ts') };
@@ -57,6 +58,7 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
     babel({
       presets: [reactCompilerPreset()],
     }),
+    shadowPreload({ packageName: pkg.name }),
     checker({
       typescript: {
         tsconfigPath: 'tsconfig.app.json',

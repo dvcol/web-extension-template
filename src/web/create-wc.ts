@@ -5,12 +5,24 @@ import { createRoot } from 'react-dom/client';
 
 import { Logger } from '~/services/logger.service';
 
+const contextKey = Symbol.for(`${import.meta.env.PKG_NAME}`);
+
+declare global {
+  interface Window {
+    [contextKey]: Record<symbol, HTMLElement>;
+  }
+}
+
+window[contextKey] ??= {};
+
 export function createElementInstance(options: DefineOption, name: string) {
   return class AppWc extends HTMLElement {
+    readonly key = Symbol.for(name);
     async connectedCallback() {
-      const shadowRoot = this.attachShadow({ mode: 'closed' });
+      const shadowRoot = this.attachShadow({ mode: 'open' });
 
       const children = Array.from(this.children);
+      window[contextKey][this.key] = this;
 
       try {
         const { ContainerComponent } = await import('~/components/container/ContainerComponent');
@@ -21,5 +33,9 @@ export function createElementInstance(options: DefineOption, name: string) {
         throw error;
       }
     };
+
+    disconnectedCallback() {
+      delete window[contextKey][this.key];
+    }
   };
 }
