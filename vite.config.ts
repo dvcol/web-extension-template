@@ -58,7 +58,6 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
     babel({
       presets: [reactCompilerPreset()],
     }),
-    shadowPreload({ packageName: pkg.name }),
     checker({
       typescript: {
         tsconfigPath: 'tsconfig.app.json',
@@ -114,6 +113,7 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
         await writeFile(outPath, `import 'http://localhost:3303/scripts/background/index.ts';`);
       },
     },
+    ...shadowPreload({ packageName: pkg.name }),
   ];
 
   if (!_isDev && _isWeb) {

@@ -10,6 +10,7 @@ export interface ShadowPreloadOptions {
 }
 
 const PRELOAD_MARKER = '\0vite/preload-helper';
+const VITE_CLIENT_REGEX = /vite\/dist\/client\/client\.mjs/;
 
 /**
  * Generates the `getRoot` helper that resolves the shadow root of the web component,
@@ -56,20 +57,15 @@ const ADOPT_GUARD = [
 ].join('\n');
 
 /**
- * Vite plugin that transforms the generated preload-helper chunk to support Shadow DOM.
+ * Build plugin: transforms the preload-helper chunk to support Shadow DOM.
  *
  * Injects `getRoot()` / `adoptSheet()` helpers and rewrites DOM access calls
  * inside `__vitePreload` so CSS gets adopted via `adoptedStyleSheets` when the
  * application runs inside a web component's `ShadowRoot`.
  */
-export function shadowPreload(options: ShadowPreloadOptions = {}): PluginOption {
-  const {
-    packageName = '@dvcol/web-extension-template',
-    componentName = 'wc-web-extension-template',
-  } = options;
-
+function shadowPreloadBuild(packageName: string, componentName: string): PluginOption {
   return {
-    name: 'shadow-preload',
+    name: 'shadow-preload-build',
     enforce: 'post',
     apply: 'build',
     renderChunk(code, chunk) {
@@ -120,4 +116,78 @@ export function shadowPreload(options: ShadowPreloadOptions = {}): PluginOption 
       };
     },
   };
+}
+
+/**
+ * Dev plugin: transforms `@vite/client` so `updateStyle` / `removeStyle`
+ * inject `<style>` elements into the web component's shadow root instead of `document.head`.
+ */
+function shadowPreloadDev(packageName: string, componentName: string): PluginOption {
+  return {
+    name: 'shadow-preload-dev',
+    enforce: 'post',
+    apply: 'serve',
+    transform: {
+      filter: { id: VITE_CLIENT_REGEX },
+      handler(code) {
+        if (!code.includes('updateStyle') || !code.includes('removeStyle')) return null;
+
+        const s = new MagicString(code);
+
+        // 1. Inject getRoot after `const linkSheetsMap = ...`
+        s.replace(
+          'const linkSheetsMap = /* @__PURE__ */ new Map();',
+          `const linkSheetsMap = /* @__PURE__ */ new Map();${buildGetRoot(packageName, componentName)}`,
+        );
+
+        // 2. Init block – redirect style query to shadow root
+        s.replace(
+          'document.querySelectorAll("style[data-vite-dev-id]")',
+          'getRoot().querySelectorAll("style[data-vite-dev-id]")',
+        );
+
+        // 3. Init block – redirect link stylesheet query to shadow root
+        s.replace(
+          'document.querySelectorAll("link[rel=\\"stylesheet\\"][data-vite-dev-id]")',
+          'getRoot().querySelectorAll("link[rel=\\"stylesheet\\"][data-vite-dev-id]")',
+        );
+
+        // 4. updateStyle – append <style> to shadow root instead of document.head
+        s.replace('document.head.appendChild(style)', 'getRoot(\'head\').appendChild(style)');
+
+        // 5. removeStyle – search link stylesheets in shadow root
+        s.replace(
+          'document.querySelectorAll(`link[rel="stylesheet"][data-vite-dev-id]`)',
+          'getRoot().querySelectorAll(`link[rel="stylesheet"][data-vite-dev-id]`)',
+        );
+
+        // 6. removeStyle – remove <style> from shadow root instead of document.head
+        s.replace('document.head.removeChild(style)', 'getRoot(\'head\').removeChild(style)');
+
+        // 7. CSS HMR update – search <link> elements in shadow root
+        s.replace('document.querySelectorAll("link"))', 'getRoot().querySelectorAll("link"))');
+
+        if (!s.hasChanged()) return null;
+
+        return {
+          code: s.toString(),
+          map: s.generateMap({ hires: true }),
+        };
+      },
+    },
+  };
+}
+
+/**
+ * Vite plugin(s) that add Shadow DOM support for both build (preload-helper)
+ * and dev (`@vite/client` updateStyle/removeStyle) modes.
+ */
+export function shadowPreload({
+  packageName = '@dvcol/web-extension-template',
+  componentName = 'wc-web-extension-template',
+}: ShadowPreloadOptions = {}): PluginOption[] {
+  return [
+    shadowPreloadBuild(packageName, componentName),
+    shadowPreloadDev(packageName, componentName),
+  ];
 }
