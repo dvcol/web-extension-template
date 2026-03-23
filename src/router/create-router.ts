@@ -1,4 +1,4 @@
-import { createHashRouter, redirect } from 'react-router-dom';
+import { createHashRouter, redirect } from 'react-router';
 
 import { Route, routes } from '~/router/routes';
 

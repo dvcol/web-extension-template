@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import { Route } from '~/router';
 import { getI18n } from '~/utils/i18n.utils';

@@ -1,4 +1,8 @@
+import type { RouteObject } from 'react-router';
+
 import { lazy } from 'react';
+
+import { PageLoading } from '~/components/common/loading/PageLoading';
 
 export enum Route {
   Home = '/',
@@ -6,7 +10,7 @@ export enum Route {
   Goodbye = '/goodbye',
 }
 
-export const routes = [
+export const routes: RouteObject[] = [
   {
     path: Route.Hello,
     Component: lazy(async () => import('~/components/views/hello/HelloComponent').then(m => ({ default: m.HelloComponent }))),
@@ -15,4 +19,4 @@ export const routes = [
     path: Route.Goodbye,
     Component: lazy(async () => import('~/components/views/goodbye/GoodbyeComponent').then(m => ({ default: m.GoodbyeComponent }))),
   },
-];
+].map(route => ({ ...route, HydrateFallback: PageLoading }));
