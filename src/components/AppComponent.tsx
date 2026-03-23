@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router';
+import { AnimatedOutlet } from '~/components/common/motion/AnimatedOutlet';
 
 import styles from './AppComponent.module.scss';
 
@@ -9,7 +9,7 @@ export function AppComponent() {
         <nav />
       </header>
       <main className={styles.main}>
-        <Outlet />
+        <AnimatedOutlet />
       </main>
       <footer className={styles.footer} />
     </>

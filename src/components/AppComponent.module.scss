@@ -30,17 +30,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: layout.$main-content-height;
-  margin-top: layout.$safe-navbar-height;
-
-  &.full-height {
-    min-height: var(--full-height);
-    margin-top: 0;
-
-    .loading-container {
-      padding-top: layout.$safe-navbar-height;
-    }
-  }
+  min-height: 100%;
 }
 
 .footer {
@@ -48,36 +38,4 @@
   bottom: 0;
   z-index: layers.$layer-ui;
   width: 100%;
-}
-
-.scale-enter {
-  animation: scale-in 0.25s ease forwards;
-}
-
-.scale-leave {
-  animation: scale-out 0.25s ease forwards;
-}
-
-@keyframes scale-in {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes scale-out {
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  to {
-    transform: scale(0.95);
-    opacity: 0;
-  }
 }
