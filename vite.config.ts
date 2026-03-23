@@ -97,6 +97,7 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
   if (!_isDev && _isWeb) {
     plugins.push(
       dtsPlugin({
+        tsconfigPath: resolveParent('tsconfig.app.json'),
         include: ['index.ts', 'web/define-component.ts'],
         entryRoot: resolveParent('src'),
         outDir: resolveParent(`${outDir}/lib`),
