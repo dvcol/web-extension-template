@@ -11,27 +11,22 @@ import dtsPlugin from 'vite-plugin-dts';
 import { VitePWA } from 'vite-plugin-pwa';
 
 import pkg from './package.json';
-import { isDev, port, resolveParent } from './scripts/utils';
+import { isDev, isWeb, outDir, port, resolveParent, sourcemap } from './scripts/utils';
 
-const isWeb = !!process.env.VITE_WEB;
-const sourcemap = !!process.env.VITE_SOURCEMAP;
-
-function getInput(hmr: boolean, _isWeb: boolean) {
+function getInput(hmr: boolean, _isWeb: boolean): Record<string, string> {
   if (hmr) return { background: resolveParent('src/scripts/background/index.ts') };
 
-  const inputs: Record<string, string> = {
+  if (_isWeb) return {
+    web: resolveParent('src/index.html'),
+    lib: resolveParent('src/index.ts'),
+    entry: resolveParent('src/web/define-component.ts'),
+  };
+  return {
     background: resolveParent('src/scripts/background/index.ts'),
     options: resolveParent('src/views/options/index.html'),
     popup: resolveParent('src/views/popup/index.html'),
     panel: resolveParent('src/views/panel/index.html'),
   };
-
-  if (_isWeb) {
-    inputs.web = resolveParent('src/index.html');
-    inputs.lib = resolveParent('src/index.ts');
-    inputs.entry = resolveParent('src/web/define-component.ts');
-  }
-  return inputs;
 }
 
 const i18nRegex = /.*src\/i18n\/([a-zA-Z]+)\/.*\.json/;
@@ -56,9 +51,9 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
       configureServer: (server) => {
         console.info('server start');
         server.ws.on('fetch:i18n', async () => {
-          const dir = await readdir('dist/_locales');
+          const dir = await readdir(`${outDir}/_locales`);
           const locales = dir.map(async _lang =>
-            readFile(`dist/_locales/${_lang}/messages.json`, { encoding: 'utf-8' }).then(locale => ({ lang: _lang, locale: JSON.parse(locale) as JsonLocale })),
+            readFile(`${outDir}/_locales/${_lang}/messages.json`, { encoding: 'utf-8' }).then(locale => ({ lang: _lang, locale: JSON.parse(locale) as JsonLocale })),
           );
           server.ws.send({
             type: 'custom',
@@ -105,7 +100,7 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
       dtsPlugin({
         include: ['index.ts', 'web/define-component.ts'],
         entryRoot: resolveParent('src'),
-        outDir: resolveParent('dist/lib'),
+        outDir: resolveParent(`${outDir}/lib`),
       }),
       VitePWA({
         scope: '/web-extension-template/',
@@ -127,7 +122,7 @@ function getPlugins(_isDev: boolean, _isWeb: boolean): PluginOption[] {
           ],
         },
         workbox: {
-          sourcemap: true,
+          sourcemap: (isDev || sourcemap),
           globPatterns: ['**/*.{js,css,html,ico,png,svg,json,mp4}'],
         },
       }),
@@ -172,8 +167,8 @@ export default defineConfig(() => ({
     host: true,
   },
   build: {
-    outDir: resolveParent('dist'),
-    sourcemap: isDev || sourcemap ? 'inline' : false,
+    outDir: resolveParent(outDir),
+    sourcemap: (isDev || sourcemap) ? 'inline' : false,
     minify: false,
     rollupOptions: {
       input: getInput(isDev, isWeb),

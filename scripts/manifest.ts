@@ -3,7 +3,7 @@ import type { Manifest } from 'webextension-polyfill';
 import fs from 'fs-extra';
 
 import pkg from '../package.json';
-import { getDirName, isDev, port, resolveParent } from './utils';
+import { getDirName, isDev, outDir, port, resolveParent } from './utils';
 
 const Endpoints = {
   Dev: 'http://localhost' as const,
@@ -61,9 +61,9 @@ export const manifest: WebManifest = {
 };
 
 export async function writeManifest() {
-  fs.ensureDirSync(resolveParent('dist'));
-  fs.writeJSONSync(resolveParent('dist/manifest.json'), manifest, {
+  fs.ensureDirSync(resolveParent(outDir));
+  fs.writeJSONSync(resolveParent(`${outDir}/manifest.json`), manifest, {
     spaces: 2,
   });
-  console.info(`Writing manifest.json to '${getDirName()}/dist/manifest.json'`);
+  console.info(`Writing manifest.json to '${getDirName()}/${outDir}/manifest.json'`);
 }

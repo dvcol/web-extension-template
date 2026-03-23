@@ -10,6 +10,7 @@
     "resolveJsonModule": true,
     "types": ["chrome", "@types/chrome"],
     "strict": true,
+    "outDir": "build",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
