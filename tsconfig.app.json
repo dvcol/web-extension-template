@@ -4,8 +4,6 @@
     "composite": true,
     "target": "ESNext",
     "lib": ["dom", "ESNext", "dom.iterable"],
-    "useDefineForClassFields": true,
-    "baseUrl": ".",
     "module": "ESNext",
     "paths": {
       "~/*": ["./src/*"]
@@ -22,14 +20,13 @@
     "checkJs": true,
     "strict": true,
     "outDir": "build",
-    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true
   },
   "include": [
-    "vite.env.d.ts",
+    "src/vite.env.d.ts",
     "src/**/*.ts",
     "src/**/*.js",
     "src/**/*.svelte",
