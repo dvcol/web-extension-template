@@ -47,7 +47,7 @@
     "analyse": "VITE_DEVTOOLS=true pnpm run build",
     "test:unit": "vitest run --coverage --mode testing",
     "test:watch": "vitest --mode testing",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
     "lint:fix": "pnpm run lint --fix",
     "style": "stylelint '**/*.{svelte,css,scss,less,html}' --go '{\"gitignore\":true}'",
     "style:fix": "pnpm run style --fix",
