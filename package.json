@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.8.0",
   "title": "Web Extension Template",
-  "packageManager": "pnpm@10.34.1",
+  "packageManager": "pnpm@11.1.0",
   "description": "Web Extension Template",
   "author": "dvcol",
   "license": "MIT",
@@ -44,7 +44,7 @@
     "analyse": "VITE_DEVTOOLS=true pnpm run build",
     "test:unit": "vitest run --coverage --mode testing",
     "test:watch": "vitest --mode testing",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
     "lint:fix": "pnpm run lint --fix",
     "style": "stylelint '**/*.{vue,css,scss,less,html}' --go '{\"gitignore\":true}'",
     "style:fix": "pnpm run style --fix",
@@ -103,13 +103,5 @@
     "vitest": "^4.1.0",
     "vue-tsc": "^3.2.6",
     "webextension-polyfill": "^0.12.0"
-  },
-  "lint-staged": {
-    "*.{js,cjs,mjs,jsx,ts,tsx,vue,svelte,json,md,yml,html,md,svg,xml}": [
-      "eslint --fix"
-    ],
-    "*.{css,scss,less,vue,svelte}": [
-      "stylelint --fix"
-    ]
   }
 }
